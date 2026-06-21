@@ -8,6 +8,7 @@ package foodstore.enums;
  *
  * @author usuario
  */
-public class Rol {
-    
+public enum Rol {
+    ADMIN,
+    USUARIO
 }

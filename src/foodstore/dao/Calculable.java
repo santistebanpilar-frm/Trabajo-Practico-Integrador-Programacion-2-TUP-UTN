@@ -8,6 +8,6 @@ package foodstore.dao;
  *
  * @author usuario
  */
-public class Calculable {
-    
+public interface Calculable {
+    void calcularTotal();
 }
