@@ -4,10 +4,101 @@
  */
 package foodstore.entities;
 
+import foodstore.enums.Rol;
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  *
  * @author usuario
  */
-public class Usuario {
+public class Usuario extends Base{
+    private String nombre;
+    private String apellido;
+    private String mail;
+    private String celular;
+    private String contrasenia;
+    private Rol rol;
+    private List<Pedido> pedidos = new ArrayList();
+
+    public Usuario(String nombre, String apellido, String mail, String celular, String contrasenia, Rol rol) {
+        super();
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.mail = mail;
+        this.celular = celular;
+        this.contrasenia = contrasenia;
+        this.rol = rol;
+    }
+
+    public Usuario() {
+        super();
+    }
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public void setApellido(String apellido) {
+        this.apellido = apellido;
+    }
+
+    public void setMail(String mail) {
+        this.mail = mail;
+    }
+
+    public void setCelular(String celular) {
+        this.celular = celular;
+    }
+
+    public void setContrasenia(String contrasenia) {
+        this.contrasenia = contrasenia;
+    }
+
+    public void setRol(Rol rol) {
+        this.rol = rol;
+    }
+
+    public void setPedidos(List<Pedido> pedidos) {
+        this.pedidos = pedidos;
+    }
     
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public String getApellido() {
+        return apellido;
+    }
+
+    public String getMail() {
+        return mail;
+    }
+
+    public String getCelular() {
+        return celular;
+    }
+
+    public String getContrasenia() {
+        return contrasenia;
+    }
+
+    public Rol getRol() {
+        return rol;
+    }
+
+    public List<Pedido> getPedidos() {
+        return pedidos;
+    }
+    
+
+    @Override
+    public String toString() {
+        return "Usuario{" + 
+                "id=" + getId() +
+                "nombre=" + nombre + 
+                ", apellido=" + apellido + 
+                ", mail=" + mail + 
+                ", rol=" + rol +  '}';
+    }
 }
