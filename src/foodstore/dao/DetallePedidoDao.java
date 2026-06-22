@@ -20,15 +20,14 @@ import java.util.ArrayList;
  *
  * @author usuario
  */
-public class DetallePedidoDao implements IBaseDAO<DetallePedido>{
+public class DetallePedidoDao{
     private Connection conn;
 
     public DetallePedidoDao(Connection conn) {
         this.conn = conn;
     }
     
-    @Override
-    public DetallePedido crear(DetallePedido detalle) throws DAOException {
+    public DetallePedido crear(DetallePedido detalle, Long pedidoId) throws DAOException {
         String sql = "INSERT INTO detalle_pedido (id_pedido, id_producto, cantidad, subtotal) VALUES (?, ?, ?, ?);";
         try(PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)){
             ps.setLong(1, pedidoId);
@@ -47,7 +46,6 @@ public class DetallePedidoDao implements IBaseDAO<DetallePedido>{
         }
     }
 
-    @Override
     public Optional<DetallePedido> leer(Long id) throws DAOException {
         String sql = "SELECT * FROM detalle_pedido WHERE id = ? AND eliminado = false";
         try (PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -63,7 +61,6 @@ public class DetallePedidoDao implements IBaseDAO<DetallePedido>{
         return Optional.empty();
     }
 
-    @Override
     public List<DetallePedido> listar() throws DAOException {
         List<DetallePedido> lista = new ArrayList<>();
         String sql = "SELECT * FROM detalle_pedido WHERE eliminado = false";
@@ -78,7 +75,6 @@ public class DetallePedidoDao implements IBaseDAO<DetallePedido>{
         return lista;
     }
 
-    @Override
     public boolean actualizar(DetallePedido detalle) throws DAOException {
         String sql = "UPDATE detalle_pedido SET cantidad = ?, subtotal = ? WHERE id = ? AND eliminado = false";
         try (PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -92,7 +88,6 @@ public class DetallePedidoDao implements IBaseDAO<DetallePedido>{
         }
     }
 
-    @Override
     public boolean eliminar(Long id) throws DAOException {
         String sql = "UPDATE detalle_pedido SET eliminado = true WHERE id = ?";
         try (PreparedStatement ps = conn.prepareStatement(sql)) {

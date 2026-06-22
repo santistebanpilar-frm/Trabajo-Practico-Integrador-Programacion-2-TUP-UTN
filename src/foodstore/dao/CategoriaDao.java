@@ -28,7 +28,7 @@ public class CategoriaDao implements IBaseDAO<Categoria>{
 
     @Override
     public Categoria crear(Categoria categoria) throws DAOException {
-        String sql = "INSERT INTO categorias (nombre, descripcion) VALUES (?, ?);";
+        String sql = "INSERT INTO categoria (nombre, descripcion) VALUES (?, ?);";
         try(PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)){
             ps.setString(1, categoria.getNombre());
             ps.setString(2, categoria.getDescripcion());
@@ -46,7 +46,7 @@ public class CategoriaDao implements IBaseDAO<Categoria>{
 
     @Override
     public Optional<Categoria> leer(Long id) throws DAOException {
-        String sql = "SELECT * FROM categorias WHERE id = ?";
+        String sql = "SELECT * FROM categoria WHERE id = ? AND eliminado = false";
         try(PreparedStatement ps = conn.prepareStatement(sql)){
             ps.setLong(1, id);
             try (ResultSet rs = ps.executeQuery()){
@@ -65,7 +65,7 @@ public class CategoriaDao implements IBaseDAO<Categoria>{
     @Override
     public List<Categoria> listar() throws DAOException {
         List<Categoria> lista = new ArrayList<>();
-        String sql = "SELECT * FROM categorias WHERE eliminado = false ORDER BY nombre ASC";
+        String sql = "SELECT * FROM categoria WHERE eliminado = false ORDER BY nombre ASC";
         try(Statement st = conn.createStatement();
              ResultSet rs = st.executeQuery(sql)){
             while (rs.next()){
@@ -79,7 +79,7 @@ public class CategoriaDao implements IBaseDAO<Categoria>{
 
     @Override
     public boolean actualizar(Categoria categoria) throws DAOException {
-        String sql = "UPDATE categorias SET nombre = ?, descripcion = ? WHERE id = ?";
+        String sql = "UPDATE categoria SET nombre = ?, descripcion = ? WHERE id = ? AND eliminadi = false";
         try (PreparedStatement ps = conn.prepareStatement(sql)){
             ps.setString(1, categoria.getNombre());
             ps.setString(2, categoria.getDescripcion());
@@ -93,7 +93,7 @@ public class CategoriaDao implements IBaseDAO<Categoria>{
 
     @Override
     public boolean eliminar(Long id) throws DAOException {
-        String sql = "UPDATE categorias SET eliminado = true WHERE id = ?";
+        String sql = "UPDATE categoria SET eliminado = true WHERE id = ?";
         try(PreparedStatement ps = conn.prepareStatement(sql)){
             ps.setLong(1, id);
             int filas = ps.executeUpdate();
