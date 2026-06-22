@@ -16,15 +16,20 @@ public class DetallePedido extends Base{
     public DetallePedido() {
         super();
     }
-    
 
-    public DetallePedido(Integer cantidad, Double precioUnitario, Producto producto) {
+    public DetallePedido(Producto producto, Integer cantidad, Double subTotal) {
         super();
         this.cantidad = cantidad;
+        this.subTotal = subTotal;
         this.producto = producto;
-        this.subTotal = cantidad * precioUnitario ;
     }
-    
+
+    public DetallePedido( Long id, Producto producto, Integer cantidad, Double subTotal) {
+        super(id);
+        this.cantidad = cantidad;
+        this.subTotal = subTotal;
+        this.producto = producto;
+    }
     
     public Double calcularSubTotal(){
         if(producto != null && producto.getPrecio() != null){
@@ -47,7 +52,7 @@ public class DetallePedido extends Base{
     }
 
     public Double getSubTotal() {
-        return subTotal;
+        return calcularSubTotal();
     }
 
     public Producto getProducto() {

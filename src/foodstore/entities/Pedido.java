@@ -31,13 +31,22 @@ public class Pedido extends Base implements Calculable{
         this.total = 0.0;
     }
 
-    public Pedido(LocalDate fecha, Estado estado, FormaPago formaPago, Usuario usuario) {
+    public Pedido(Usuario usuario, LocalDate fecha, Estado estado, FormaPago formaPago) {
         super();
         this.fecha = fecha;
         this.estado = estado;
         this.formaPago = formaPago;
         this.usuario = usuario;
         this.total = 0.0;
+    }
+
+    public Pedido( Long id,Usuario usuario, LocalDate fecha, Estado estado, Double total, FormaPago formaPago) {
+        super(id);
+        this.fecha = fecha;
+        this.estado = estado;
+        this.total = total;
+        this.formaPago = formaPago;
+        this.usuario = usuario;
     }
     
 
@@ -50,8 +59,8 @@ public class Pedido extends Base implements Calculable{
 
     }
     
-    public void addDetallePedido(Integer cantidad,Double precioUnitario, Producto producto){
-        DetallePedido dp = new DetallePedido(cantidad,precioUnitario, producto);
+    public void addDetallePedido(Producto producto, Integer cantidad, Double subTotal){
+        DetallePedido dp = new DetallePedido(producto, cantidad, subTotal);
         detalles.add(dp);
         calcularTotal();
     }

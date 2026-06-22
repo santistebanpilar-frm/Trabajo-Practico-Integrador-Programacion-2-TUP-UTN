@@ -21,6 +21,17 @@ public class Usuario extends Base{
     private Rol rol;
     private List<Pedido> pedidos = new ArrayList();
 
+    public Usuario(Long id, String nombre, String apellido, String mail, String celular, String contrasenia, Rol rol) {
+        super(id);
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.mail = mail;
+        this.celular = celular;
+        this.contrasenia = contrasenia;
+        this.rol = rol;
+    }
+    
+
     public Usuario(String nombre, String apellido, String mail, String celular, String contrasenia, Rol rol) {
         super();
         this.nombre = nombre;
@@ -30,6 +41,7 @@ public class Usuario extends Base{
         this.contrasenia = contrasenia;
         this.rol = rol;
     }
+    
 
     public Usuario() {
         super();

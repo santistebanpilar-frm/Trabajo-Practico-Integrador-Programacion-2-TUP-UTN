@@ -27,6 +27,17 @@ public class Producto extends Base{
         this.disponible = stock > 0;
     }
 
+    public Producto(Long id, String nombre, Double precio, String descripcion, Integer stock, String imagen) {
+        super(id);
+        this.nombre = nombre;
+        this.precio = precio;
+        this.descripcion = descripcion;
+        this.stock = stock;
+        this.imagen = imagen;
+        this.disponible = stock > 0;
+    }
+    
+
     public Producto() {
         super();
     }

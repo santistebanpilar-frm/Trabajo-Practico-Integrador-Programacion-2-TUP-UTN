@@ -16,6 +16,13 @@ public class Categoria extends Base{
     private String nombre;
     private String descripcion;
 
+    public Categoria( Long id, String nombre, String descripcion) {
+        super(id);
+        this.nombre = nombre;
+        this.descripcion = descripcion;
+    }
+    
+
     public Categoria(String nombre, String descripcion) {
         super();
         this.nombre = nombre;

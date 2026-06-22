@@ -12,26 +12,38 @@ import java.util.Objects;
  * @author usuario
  */
 public abstract class Base {
-    private static long contador = 0;
-    private long id;
+    private Long id;
     private Boolean eliminado;
     private LocalDateTime createdAt;
 
     public Base() {
-        this.id = generarId();
+    }
+    
+
+    public Base(Long id) {
+        this.id = id;
         this.eliminado = false;
         this.createdAt = LocalDateTime.now();
     }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
     
-    public long generarId(){
-        return this.id = ++contador;
+
+    public Boolean getEliminado() {
+        return eliminado;
     }
 
-    public long getId() {
+    public void setEliminado(Boolean eliminado) {
+        this.eliminado = eliminado;
+    }
+
+    public Long getId() {
         return id;
     }
 
-    public boolean isEliminado() {
+    public Boolean isEliminado() {
         return eliminado;
     }
 
