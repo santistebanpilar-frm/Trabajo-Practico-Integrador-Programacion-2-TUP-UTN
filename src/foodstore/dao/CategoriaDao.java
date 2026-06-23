@@ -79,7 +79,7 @@ public class CategoriaDao implements IBaseDAO<Categoria>{
 
     @Override
     public boolean actualizar(Categoria categoria) throws SQLException {
-        String sql = "UPDATE categoria SET nombre = ?, descripcion = ? WHERE id = ? AND eliminadi = false";
+        String sql = "UPDATE categoria SET nombre = ?, descripcion = ? WHERE id = ? AND eliminado = false";
         try (PreparedStatement ps = conn.prepareStatement(sql)){
             ps.setString(1, categoria.getNombre());
             ps.setString(2, categoria.getDescripcion());
