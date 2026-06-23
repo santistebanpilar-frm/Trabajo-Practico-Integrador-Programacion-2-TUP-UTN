@@ -8,7 +8,7 @@ import foodstore.entities.Pedido;
 import foodstore.entities.Usuario;
 import foodstore.enums.Estado;
 import foodstore.enums.FormaPago;
-import foodstore.exception.DAOException;
+import foodstore.exception.ValidacionException;
 import java.util.List;
 import java.util.Optional;
 import java.sql.*;
@@ -25,7 +25,7 @@ public class PedidoDao implements IBaseDAO<Pedido>{
         this.conn = conn;
     }
     @Override
-    public Pedido crear(Pedido pedido) throws DAOException {
+    public Pedido crear(Pedido pedido) throws  SQLException {
         String sql = "INSERT INTO pedido (id_usuario, fecha, estado, forma_pago, total, eliminado) VALUES (?, ?, ?, ?, ?, false)";
         try (PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             ps.setLong(1, pedido.getUsuario().getId());
@@ -42,12 +42,12 @@ public class PedidoDao implements IBaseDAO<Pedido>{
             }
             return pedido;
         } catch (SQLException e) {
-            throw new DAOException("Error al crear pedido");
+            throw new SQLException("Error al crear pedido", e);
         }
     }
 
     @Override
-    public Optional<Pedido> leer(Long id) throws DAOException {
+    public Optional<Pedido> leer(Long id) throws SQLException {
         String sql = "SELECT * FROM pedido WHERE id = ? AND eliminado = false";
         try (PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setLong(1, id);
@@ -57,13 +57,13 @@ public class PedidoDao implements IBaseDAO<Pedido>{
                 }
             }
         } catch (SQLException e) {
-            throw new DAOException("Error al leer pedido");
+            throw new SQLException("Error al leer pedido", e);
         }
         return Optional.empty();
     }
 
     @Override
-    public List<Pedido> listar() throws DAOException {
+    public List<Pedido> listar() throws SQLException {
         List<Pedido> lista = new ArrayList<>();
         String sql = "SELECT * FROM pedido WHERE eliminado = false ORDER BY fecha DESC";
         try (Statement st = conn.createStatement();
@@ -72,13 +72,13 @@ public class PedidoDao implements IBaseDAO<Pedido>{
                 lista.add(mapearFila(rs));
             }
         } catch (SQLException e) {
-            throw new DAOException("Error al listar pedidos");
+            throw new SQLException("Error al listar pedidos", e);
         }
         return lista;
     }
 
     @Override
-    public boolean actualizar(Pedido pedido) throws DAOException {
+    public boolean actualizar(Pedido pedido) throws SQLException {
         String sql = "UPDATE pedido SET estado = ?, forma_pago = ?, total = ? WHERE id = ? AND eliminado = false";
         try (PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setString(1, pedido.getEstado().name());
@@ -88,19 +88,19 @@ public class PedidoDao implements IBaseDAO<Pedido>{
             int filas = ps.executeUpdate();
             return filas == 1;
         } catch (SQLException e) {
-            throw new DAOException("Error al actualizar pedido");
+            throw new SQLException("Error al actualizar pedido", e);
         }
     }
 
     @Override
-    public boolean eliminar(Long id) throws DAOException {
+    public boolean eliminar(Long id) throws SQLException {
         String sql = "UPDATE pedido SET eliminado = true WHERE id = ?";
         try (PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setLong(1, id);
             int filas = ps.executeUpdate();
             return filas == 1;
         } catch (SQLException e) {
-            throw new DAOException("Error al eliminar pedido");
+            throw new SQLException("Error al eliminar pedido", e);
         }
     }
 

@@ -5,7 +5,7 @@
 package foodstore.dao;
 import foodstore.entities.Usuario;
 import foodstore.enums.Rol;
-import foodstore.exception.DAOException;
+import foodstore.exception.ValidacionException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +23,7 @@ public class UsuarioDao implements IBaseDAO<Usuario> {
     }
 
     @Override
-    public Usuario crear(Usuario usuario) throws DAOException {
+    public Usuario crear(Usuario usuario) throws SQLException {
         String sql = "INSERT INTO usuario (nombre, apellido, mail, celular, contraseña, rol, eliminado) VALUES (?, ?, ?, ?, ?, ?, false)";
         try (PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             ps.setString(1, usuario.getNombre());
@@ -42,14 +42,14 @@ public class UsuarioDao implements IBaseDAO<Usuario> {
             return usuario;
         } catch (SQLException e) {
             if (e.getMessage().contains("Duplicate")) {
-                throw new DAOException("El mail ya existe en la base de datos");
+                throw new SQLException("El mail ya existe en la base de datos", e);
             }
-            throw new DAOException("Error al crear usuario");
+            throw new SQLException("Error al crear usuario", e);
         }
     }
 
     @Override
-    public Optional<Usuario> leer(Long id) throws DAOException {
+    public Optional<Usuario> leer(Long id) throws SQLException {
         String sql = "SELECT * FROM usuario WHERE id = ? AND eliminado = false";
         try (PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setLong(1, id);
@@ -59,13 +59,13 @@ public class UsuarioDao implements IBaseDAO<Usuario> {
                 }
             }
         } catch (SQLException e) {
-            throw new DAOException("Error al leer usuario");
+            throw new SQLException("Error al leer usuario", e);
         }
         return Optional.empty();
     }
 
     @Override
-    public List<Usuario> listar() throws DAOException {
+    public List<Usuario> listar() throws SQLException {
         List<Usuario> lista = new ArrayList<>();
         String sql = "SELECT * FROM usuario WHERE eliminado = false ORDER BY nombre ASC";
         try (Statement st = conn.createStatement();
@@ -74,13 +74,13 @@ public class UsuarioDao implements IBaseDAO<Usuario> {
                 lista.add(mapearFila(rs));
             }
         } catch (SQLException e) {
-            throw new DAOException("Error al listar usuarios");
+            throw new SQLException("Error al listar usuarios", e);
         }
         return lista;
     }
 
     @Override
-    public boolean actualizar(Usuario usuario) throws DAOException {
+    public boolean actualizar(Usuario usuario) throws SQLException {
         String sql = "UPDATE usuario SET nombre = ?, apellido = ?, mail = ?, celular = ?, contraseña = ?, rol = ? WHERE id = ? AND eliminado = false";
         try (PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setString(1, usuario.getNombre());
@@ -94,21 +94,21 @@ public class UsuarioDao implements IBaseDAO<Usuario> {
             return filas == 1;
         } catch (SQLException e) {
             if (e.getMessage().contains("Duplicate")) {
-                throw new DAOException("El mail ya existe en la base de datos");
+                throw new SQLException("El mail ya existe en la base de datos", e);
             }
-            throw new DAOException("Error al actualizar usuario");
+            throw new SQLException("Error al actualizar usuario", e);
         }
     }
 
     @Override
-    public boolean eliminar(Long id) throws DAOException {
+    public boolean eliminar(Long id) throws SQLException {
         String sql = "UPDATE usuario SET eliminado = true WHERE id = ?";
         try (PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setLong(1, id);
             int filas = ps.executeUpdate();
             return filas == 1;
         } catch (SQLException e) {
-            throw new DAOException("Error al eliminar usuario");
+            throw new SQLException("Error al eliminar usuario", e);
         }
     }
 

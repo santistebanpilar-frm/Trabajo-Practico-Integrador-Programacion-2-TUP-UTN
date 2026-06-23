@@ -5,7 +5,8 @@
 package foodstore.service;
 
 import foodstore.dao.IBaseDAO;
-import foodstore.exception.DAOException;
+import foodstore.exception.ValidacionException;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 
@@ -19,19 +20,19 @@ public class GenericService<T> {
     public GenericService(IBaseDAO<T> dao) {
         this.dao = dao;
     }
-    public T crear(T entidad) throws DAOException{
+    public T crear(T entidad) throws SQLException{
         return dao.crear(entidad);
     }
-    public Optional<T> leer(Long id)throws DAOException{
+    public Optional<T> leer(Long id)throws SQLException{
         return dao.leer(id);
     }
-    public List<T> listar()throws DAOException{
+    public List<T> listar()throws SQLException{
         return dao.listar();
     }
-    public boolean actualizar(T entidad)throws DAOException{
+    public boolean actualizar(T entidad)throws SQLException{
         return dao.actualizar(entidad);
     }
-    public boolean eliminar(Long id)throws DAOException{
+    public boolean eliminar(Long id)throws SQLException{
         return dao.eliminar(id);
     }
 }

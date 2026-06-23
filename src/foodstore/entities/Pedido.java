@@ -59,8 +59,8 @@ public class Pedido extends Base implements Calculable{
 
     }
     
-    public void addDetallePedido(Producto producto, Integer cantidad, Double subTotal){
-        DetallePedido dp = new DetallePedido(producto, cantidad, subTotal);
+    public void addDetallePedido(Producto producto, Integer cantidad){
+        DetallePedido dp = new DetallePedido(producto, cantidad);
         detalles.add(dp);
         calcularTotal();
     }

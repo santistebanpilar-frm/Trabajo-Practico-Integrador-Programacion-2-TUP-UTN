@@ -8,6 +8,8 @@ package foodstore.exception;
  *
  * @author usuario
  */
-public class StockInsuficienteException {
-    
+public class ValidacionException extends Exception {
+    public ValidacionException(String mensaje){
+        super(mensaje);
+    }
 }

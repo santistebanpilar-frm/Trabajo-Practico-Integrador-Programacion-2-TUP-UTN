@@ -17,17 +17,17 @@ public class DetallePedido extends Base{
         super();
     }
 
-    public DetallePedido(Producto producto, Integer cantidad, Double subTotal) {
+    public DetallePedido(Producto producto, Integer cantidad) {
         super();
         this.cantidad = cantidad;
-        this.subTotal = subTotal;
+        this.subTotal = calcularSubTotal();
         this.producto = producto;
     }
 
-    public DetallePedido( Long id, Producto producto, Integer cantidad, Double subTotal) {
+    public DetallePedido( Long id, Producto producto, Integer cantidad) {
         super(id);
         this.cantidad = cantidad;
-        this.subTotal = subTotal;
+        this.subTotal = calcularSubTotal();
         this.producto = producto;
     }
     
@@ -52,7 +52,7 @@ public class DetallePedido extends Base{
     }
 
     public Double getSubTotal() {
-        return calcularSubTotal();
+        return subTotal;
     }
 
     public Producto getProducto() {

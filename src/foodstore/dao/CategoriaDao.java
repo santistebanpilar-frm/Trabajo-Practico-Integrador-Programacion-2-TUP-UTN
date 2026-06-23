@@ -5,7 +5,7 @@
 package foodstore.dao;
 
 import foodstore.entities.Categoria;
-import foodstore.exception.DAOException;
+import foodstore.exception.ValidacionException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -27,7 +27,7 @@ public class CategoriaDao implements IBaseDAO<Categoria>{
     }
 
     @Override
-    public Categoria crear(Categoria categoria) throws DAOException {
+    public Categoria crear(Categoria categoria) throws SQLException {
         String sql = "INSERT INTO categoria (nombre, descripcion) VALUES (?, ?);";
         try(PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)){
             ps.setString(1, categoria.getNombre());
@@ -40,12 +40,12 @@ public class CategoriaDao implements IBaseDAO<Categoria>{
             }
             return categoria;
         }catch (SQLException e){
-            throw new DAOException("Error al crear categoria"+ e);
+            throw new SQLException("Error al crear categoria", e);
         }
     }
 
     @Override
-    public Optional<Categoria> leer(Long id) throws DAOException {
+    public Optional<Categoria> leer(Long id) throws SQLException {
         String sql = "SELECT * FROM categoria WHERE id = ? AND eliminado = false";
         try(PreparedStatement ps = conn.prepareStatement(sql)){
             ps.setLong(1, id);
@@ -56,14 +56,14 @@ public class CategoriaDao implements IBaseDAO<Categoria>{
             }
             
         }catch (SQLException e){
-            throw new DAOException("Error al leer la categoria"+ e);
+            throw new SQLException("Error al leer la categoria", e);
         }
         return Optional.empty();
     }
     
 
     @Override
-    public List<Categoria> listar() throws DAOException {
+    public List<Categoria> listar() throws SQLException {
         List<Categoria> lista = new ArrayList<>();
         String sql = "SELECT * FROM categoria WHERE eliminado = false ORDER BY nombre ASC";
         try(Statement st = conn.createStatement();
@@ -72,13 +72,13 @@ public class CategoriaDao implements IBaseDAO<Categoria>{
                 lista.add(mapearFila(rs));
             }
         }catch (SQLException e){
-            throw new DAOException("Error al listar categorias");
+            throw new SQLException("Error al listar categorias", e);
         }
         return lista;
     }
 
     @Override
-    public boolean actualizar(Categoria categoria) throws DAOException {
+    public boolean actualizar(Categoria categoria) throws SQLException {
         String sql = "UPDATE categoria SET nombre = ?, descripcion = ? WHERE id = ? AND eliminadi = false";
         try (PreparedStatement ps = conn.prepareStatement(sql)){
             ps.setString(1, categoria.getNombre());
@@ -87,12 +87,12 @@ public class CategoriaDao implements IBaseDAO<Categoria>{
             int filas = ps.executeUpdate();
             return filas == 1;
         }catch (SQLException e){
-            throw new DAOException("Error al actualizar categoria"+e);
+            throw new SQLException("Error al actualizar categoria", e);
         }
     }
 
     @Override
-    public boolean eliminar(Long id) throws DAOException {
+    public boolean eliminar(Long id) throws SQLException {
         String sql = "UPDATE categoria SET eliminado = true WHERE id = ?";
         try(PreparedStatement ps = conn.prepareStatement(sql)){
             ps.setLong(1, id);
@@ -100,7 +100,7 @@ public class CategoriaDao implements IBaseDAO<Categoria>{
             return filas > 0;
             
         }catch (SQLException e){
-            throw new DAOException("Error al eliminar categoria");
+            throw new SQLException("Error al eliminar categoria", e);
         }
     }
     private Categoria mapearFila(ResultSet rs) throws SQLException{

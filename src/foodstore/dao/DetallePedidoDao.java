@@ -6,7 +6,7 @@ package foodstore.dao;
 
 import foodstore.entities.DetallePedido;
 import foodstore.entities.Producto;
-import foodstore.exception.DAOException;
+import foodstore.exception.ValidacionException;
 import java.util.List;
 import java.util.Optional;
 import java.sql.Connection;
@@ -27,7 +27,7 @@ public class DetallePedidoDao{
         this.conn = conn;
     }
     
-    public DetallePedido crear(DetallePedido detalle, Long pedidoId) throws DAOException {
+    public void crear(DetallePedido detalle, Long pedidoId) throws SQLException {
         String sql = "INSERT INTO detalle_pedido (id_pedido, id_producto, cantidad, subtotal) VALUES (?, ?, ?, ?);";
         try(PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)){
             ps.setLong(1, pedidoId);
@@ -40,76 +40,45 @@ public class DetallePedidoDao{
                     detalle.setId(rs.getLong(1));
                 }
             }
-            return detalle;
-        }catch (SQLException e){
-            throw new DAOException("Error al crear item de pedido"+ e);
-        }
+        }  
     }
-
-    public Optional<DetallePedido> leer(Long id) throws DAOException {
-        String sql = "SELECT * FROM detalle_pedido WHERE id = ? AND eliminado = false";
+    public List<DetallePedido> listarPorPedido(Long pedidoId) throws SQLException {
+        String sql = "SELECT dp.id, dp.cantidad, dp.subtotal, p.id AS id_producto, p.nombre, p.precio, p.stock FROM detalle_pedido dp JOIN producto p ON p.id = dp.id_producto WHERE dp.id_pedido = ?";
+        List<DetallePedido> detalles = new ArrayList<>();
         try (PreparedStatement ps = conn.prepareStatement(sql)) {
-            ps.setLong(1, id);
+            ps.setLong(1, pedidoId);
             try (ResultSet rs = ps.executeQuery()) {
-                if (rs.next()) {
-                    return Optional.of(mapearFila(rs));
+                while (rs.next()) {
+                    Producto producto = new Producto();
+                    producto.setId(rs.getLong("producto_id"));
+                    producto.setNombre(rs.getString("nombre"));
+                    producto.setPrecio(rs.getDouble("precio"));
+                    producto.setStock(rs.getInt("stock"));
+
+                    DetallePedido detalle = new DetallePedido(producto, rs.getInt("cantidad"));
+                    detalle.setId(rs.getLong("id"));
+                    detalle.setSubTotal(rs.getDouble("sub_total"));
+
+                    detalles.add(detalle);
                 }
             }
-        } catch (SQLException e) {
-            throw new DAOException("Error al leer detalle de pedido");
         }
-        return Optional.empty();
+        return detalles;
     }
-
-    public List<DetallePedido> listar() throws DAOException {
-        List<DetallePedido> lista = new ArrayList<>();
-        String sql = "SELECT * FROM detalle_pedido WHERE eliminado = false";
-        try (Statement st = conn.createStatement();
-             ResultSet rs = st.executeQuery(sql)) {
-            while (rs.next()) {
-                lista.add(mapearFila(rs));
-            }
-        } catch (SQLException e) {
-            throw new DAOException("Error al listar detalles de pedido");
+    public void eliminarPorPedido(Long pedidoId)throws SQLException{
+        String sql = "DELETE FROM detalle_pedido WHERE id_pedido = ?";
+        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setLong(1, pedidoId);
+            ps.executeUpdate();
         }
-        return lista;
     }
-
-    public boolean actualizar(DetallePedido detalle) throws DAOException {
-        String sql = "UPDATE detalle_pedido SET cantidad = ?, subtotal = ? WHERE id = ? AND eliminado = false";
+    public void actualizar(DetallePedido detalle) throws SQLException {
+        String sql = "UPDATE detalle_pedido SET cantidad = ?, subtotal = ? WHERE id = ?";
         try (PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setInt(1, detalle.getCantidad());
             ps.setDouble(2, detalle.getSubTotal());
             ps.setLong(3, detalle.getId());
-            int filas = ps.executeUpdate();
-            return filas == 1;
-        } catch (SQLException e) {
-            throw new DAOException("Error al actualizar detalle de pedido");
+            ps.executeUpdate();
         }
-    }
-
-    public boolean eliminar(Long id) throws DAOException {
-        String sql = "UPDATE detalle_pedido SET eliminado = true WHERE id = ?";
-        try (PreparedStatement ps = conn.prepareStatement(sql)) {
-            ps.setLong(1, id);
-            int filas = ps.executeUpdate();
-            return filas == 1;
-        } catch (SQLException e) {
-            throw new DAOException("Error al eliminar detalle de pedido");
-        }
-    }
-    private DetallePedido mapearFila(ResultSet rs) throws SQLException {
-        Producto producto = new Producto();
-        producto.setId(rs.getLong("id_producto"));
-
-        DetallePedido detalle = new DetallePedido(
-        producto,
-        rs.getInt("cantidad"),
-        rs.getDouble("subtotal")
-        );
-
-        detalle.setId(rs.getLong("id"));
-        detalle.setEliminado(rs.getBoolean("eliminado"));
-        return detalle;
     }
 }
