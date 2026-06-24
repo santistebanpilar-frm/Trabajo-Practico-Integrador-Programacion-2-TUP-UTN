@@ -14,11 +14,11 @@ import java.util.Optional;
  * @author usuario
  */
 public class MenuCategoria {
-    public class MenuCategorias {
+    
     private CategoriaService categoriaService;
     private Consola lector;
 
-        public MenuCategorias(CategoriaService categoriaService, Consola lector) {
+        public MenuCategoria(CategoriaService categoriaService, Consola lector) {
             this.categoriaService = categoriaService;
             this.lector = lector;
         }
@@ -89,5 +89,5 @@ public class MenuCategoria {
         System.out.println("Categoría eliminada.\n");
     }
     
-    }
 }
+

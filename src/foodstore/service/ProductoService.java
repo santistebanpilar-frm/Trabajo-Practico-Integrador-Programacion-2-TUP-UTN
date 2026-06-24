@@ -20,7 +20,7 @@ public class ProductoService extends GenericService<Producto>{
     private IBaseDAO<Categoria> categoriaDao;
     private IBaseDAO<Producto> productoDao;
 
-    public ProductoService(IBaseDAO<Categoria> categoriaDao, IBaseDAO<Producto> productoDao, IBaseDAO<Producto> dao) {
+    public ProductoService(IBaseDAO<Categoria> categoriaDao, IBaseDAO<Producto> dao) {
         super(dao);
         this.categoriaDao = categoriaDao;
         this.productoDao = dao;

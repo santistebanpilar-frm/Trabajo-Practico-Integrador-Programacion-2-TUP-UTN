@@ -11,15 +11,16 @@ import java.sql.SQLException;
  * @author usuario
  */
 public class ConexionDB {
-    private static String url;
-    private static String user;
-    private static String password;
-    
-    public static void init(lecturaConfiguracion  configuracion){
-        url = configuracion.get("db.url");
-        user = configuracion.get("db.user");
-        password = configuracion.get("db.password");
+    private static String url = "jdbc:mysql://localhost:3306/foodstore";
+    private static String user = "root" ;
+    private static String password = "" ;
+    private String ruta;
+
+    public ConexionDB(String ruta) {
+        this.ruta = ruta;
     }
+    
+    
     public static Connection getConnection() throws SQLException{
         return DriverManager.getConnection(url, user, password);
     }
