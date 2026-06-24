@@ -34,7 +34,7 @@ public class Pedido extends Base implements Calculable{
     public Pedido(Usuario usuario, LocalDate fecha, Estado estado, FormaPago formaPago) {
         super();
         this.fecha = fecha;
-        this.estado = estado;
+        this.estado = Estado.PENDIENTE;
         this.formaPago = formaPago;
         this.usuario = usuario;
         this.total = 0.0;
@@ -43,7 +43,7 @@ public class Pedido extends Base implements Calculable{
     public Pedido( Long id,Usuario usuario, LocalDate fecha, Estado estado, Double total, FormaPago formaPago) {
         super(id);
         this.fecha = fecha;
-        this.estado = estado;
+        this.estado = Estado.PENDIENTE;
         this.total = total;
         this.formaPago = formaPago;
         this.usuario = usuario;
