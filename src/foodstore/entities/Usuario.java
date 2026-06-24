@@ -19,7 +19,7 @@ public class Usuario extends Base {
     private String celular;
     private String contraseña;
     private Rol rol;
-    private List<Pedido> pedidos = new ArrayList<>();
+    private List<Pedido> pedidos = new ArrayList<>(); //Asociacion
     
     //Sobrecarga
     public Usuario() {
