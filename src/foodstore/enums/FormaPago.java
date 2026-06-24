@@ -8,6 +8,9 @@ package foodstore.enums;
  *
  * @author usuario
  */
-public class FormaPago {
+public enum FormaPago {
+    TARJETA,
+    TRANSFERENCIA,
+    EFECTIVO;
     
 }

@@ -8,6 +8,10 @@ package foodstore.enums;
  *
  * @author usuario
  */
-public class Estado {
+public enum Estado {
+    PENDIENTE,
+    CONFIRMADO,
+    TERMINADO,
+    CANCELADO;
     
 }
