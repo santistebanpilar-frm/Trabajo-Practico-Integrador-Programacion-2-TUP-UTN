@@ -4,7 +4,7 @@
  */
 package foodstore.entities;
 
-import foodstore.dao.Calculable;
+import foodstore.interfaz.Calculable;
 import foodstore.enums.Estado;
 import foodstore.enums.FormaPago;
 import java.time.LocalDate;
