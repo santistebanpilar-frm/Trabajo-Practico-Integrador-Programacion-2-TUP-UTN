@@ -18,6 +18,8 @@ public interface IBaseDAO<T>{
     T buscarPorId(Long id);
     /*Muestra todas ls entidades de la DB por su id*/
     List<T> listar();
+    /*Actualizacion de tablas*/
+    boolean actualizar(T entidad);
     /*Para poner que esta eliminado sin tener q borrarlo de la ila en DB*/
     boolean eliminar(Long id);
     
