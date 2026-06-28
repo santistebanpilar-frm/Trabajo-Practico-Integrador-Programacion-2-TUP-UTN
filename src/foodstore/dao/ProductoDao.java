@@ -4,10 +4,39 @@
  */
 package foodstore.dao;
 
+import foodstore.entities.Producto;
+import foodstore.exception.BaseDeDatosException;
+import java.util.List;
+
 /**
  *
  * @author usuario
  */
-public class ProductoDao {
+public class ProductoDao implements IBaseDAO<Producto>{
+
+    @Override
+    public void crear(Producto obj) throws BaseDeDatosException {
+        
+    }
+
+    @Override
+    public Producto leerPorId(Long id) throws BaseDeDatosException {
+        return null;
+    }
+
+    @Override
+    public List<Producto> leerTodos() throws BaseDeDatosException {
+        return null;
+    }
+
+    @Override
+    public void actualizar(Producto nuevoObj) throws BaseDeDatosException {
+        
+    }
+
+    @Override
+    public void eliminar(Producto obj) throws BaseDeDatosException {
+        
+    }
     
 }

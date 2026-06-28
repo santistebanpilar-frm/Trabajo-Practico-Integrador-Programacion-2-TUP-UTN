@@ -4,10 +4,38 @@
  */
 package foodstore.dao;
 
+import foodstore.entities.Categoria;
+import java.util.List;
+
 /**
  *
  * @author usuario
  */
-public class CategoriaDao {
+public class CategoriaDao implements IBaseDAO<Categoria>{
+
+    @Override
+    public void crear(Categoria obj) {
+        
+    }
+
+    @Override
+    public Categoria leerPorId(Long id) {
+        return null;
+    }
+
+    @Override
+    public List<Categoria> leerTodos() {
+        return null;
+    }
+
+    @Override
+    public void actualizar(Categoria nuevoObj) {
+        
+    }
+
+    @Override
+    public void eliminar(Categoria obj) {
+        
+    }
     
 }
