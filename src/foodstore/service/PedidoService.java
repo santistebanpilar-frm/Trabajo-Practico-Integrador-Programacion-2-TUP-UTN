@@ -93,12 +93,8 @@ public class PedidoService extends GenericService<Pedido>{
     }
     @Override
     public List<Pedido> listar() throws SQLException {
-        List<Pedido> lista = super.listar();
-        if(lista.isEmpty()){
-            throw new SQLException("No hay Pedidos cargados");
-            
-        }
-        return lista;
+        
+        return super.listar();
     }
     // ProductoService
 public List<Pedido> listarPorUsuario(Long usuarioId) throws SQLException {
