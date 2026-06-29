@@ -19,13 +19,12 @@ import java.util.Optional;
  */
 public class ProductoService extends GenericService<Producto>{
     private IBaseDAO<Categoria> categoriaDao;
-    private IBaseDAO<Producto> productoDao;
-    private ProductoDao producto;
+    private ProductoDao productoDao;
 
-    public ProductoService(IBaseDAO<Categoria> categoriaDao, IBaseDAO<Producto> dao) {
-        super(dao);
+    public ProductoService(IBaseDAO<Categoria> categoriaDao, ProductoDao productoDao) {
+        super(productoDao);
         this.categoriaDao = categoriaDao;
-        this.productoDao = dao;
+        this.productoDao = productoDao;
     }
 
     
@@ -59,7 +58,7 @@ public List<Producto> listarPorCategoria(Long categoriaId) throws SQLException {
     if (categoria.isEmpty()) {
         throw new SQLException("La categoria no existe o esta eliminada");
     }
-    List<Producto> lista = producto.listarPorCategoria(categoriaId);
+    List<Producto> lista = productoDao.listarPorCategoria(categoriaId);
     if (lista.isEmpty()) {
         throw new SQLException("No hay productos para esta categoria");
     }

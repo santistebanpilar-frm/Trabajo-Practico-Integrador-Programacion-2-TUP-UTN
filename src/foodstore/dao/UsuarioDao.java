@@ -24,7 +24,7 @@ public class UsuarioDao implements IBaseDAO<Usuario> {
 
     @Override
     public Usuario crear(Usuario usuario) throws SQLException {
-        String sql = "INSERT INTO usuario (nombre, apellido, mail, celular, contraseña, rol, eliminado) VALUES (?, ?, ?, ?, ?, ?, false)";
+        String sql = "INSERT INTO usuario (nombre, apellido, mail, celular, contrasenia, rol, eliminado) VALUES (?, ?, ?, ?, ?, ?, false)";
         try (PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             ps.setString(1, usuario.getNombre());
             ps.setString(2, usuario.getApellido());
@@ -81,7 +81,7 @@ public class UsuarioDao implements IBaseDAO<Usuario> {
 
     @Override
     public boolean actualizar(Usuario usuario) throws SQLException {
-        String sql = "UPDATE usuario SET nombre = ?, apellido = ?, mail = ?, celular = ?, contraseña = ?, rol = ? WHERE id = ? AND eliminado = false";
+        String sql = "UPDATE usuario SET nombre = ?, apellido = ?, mail = ?, celular = ?, contrasenia = ?, rol = ? WHERE id = ? AND eliminado = false";
         try (PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setString(1, usuario.getNombre());
             ps.setString(2, usuario.getApellido());
@@ -119,7 +119,7 @@ public class UsuarioDao implements IBaseDAO<Usuario> {
         usuario.setApellido(rs.getString("apellido"));
         usuario.setMail(rs.getString("mail"));
         usuario.setCelular(rs.getString("celular"));
-        usuario.setContrasenia(rs.getString("contraseña"));
+        usuario.setContrasenia(rs.getString("contrasenia"));
         usuario.setRol(Rol.valueOf(rs.getString("rol")));
         usuario.setEliminado(rs.getBoolean("eliminado"));
         return usuario;

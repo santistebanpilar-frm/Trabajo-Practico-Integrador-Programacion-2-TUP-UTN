@@ -34,12 +34,8 @@ public class UsuarioService extends GenericService<Usuario>{
     }
     @Override
     public List<Usuario> listar() throws SQLException {
-        List<Usuario> lista = super.listar();
-        if(lista.isEmpty()){
-            throw new SQLException("No hay Usuarios cargados");
-            
-        }
-        return lista;
+        
+        return super.listar();
     }
     @Override
     public boolean actualizar(Usuario usuario) throws SQLException {

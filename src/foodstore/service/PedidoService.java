@@ -24,13 +24,14 @@ public class PedidoService extends GenericService<Pedido>{
     private IBaseDAO<Usuario> usuarioDao;
     private DetallePedidoService detallePedidoService;
     private Connection conn;
-    private PedidoDao pedido;
+    private PedidoDao pedidoDao;
 
-    public PedidoService(IBaseDAO<Usuario> usuarioDao, DetallePedidoService detallePedidoService, Connection conn, IBaseDAO<Pedido> dao) {
-        super(dao);
+    public PedidoService(IBaseDAO<Usuario> usuarioDao, DetallePedidoService detallePedidoService, Connection conn, PedidoDao pedidoDao) {
+        super(pedidoDao);
         this.usuarioDao = usuarioDao;
         this.detallePedidoService = detallePedidoService;
         this.conn = conn;
+        this.pedidoDao = pedidoDao;
     }
 
     
@@ -101,13 +102,13 @@ public class PedidoService extends GenericService<Pedido>{
     }
     // ProductoService
 public List<Pedido> listarPorUsuario(Long usuarioId) throws SQLException {
-    Optional<Pedido> categoria = pedido.leer(usuarioId);
-    if (categoria.isEmpty()) {
-        throw new SQLException("La categoria no existe o esta eliminada");
+    Optional<Usuario> usuario  = usuarioDao.leer(usuarioId);
+    if (usuario.isEmpty()) {
+        throw new SQLException("El Usuario no existe o esta eliminada");
     }
-    List<Pedido> lista = pedido.listarPorUsuario(usuarioId);
+    List<Pedido> lista = pedidoDao.listarPorUsuario(usuarioId);
     if (lista.isEmpty()) {
-        throw new SQLException("No hay productos para esta categoria");
+        throw new SQLException("No hay productos para este Usuario");
     }
     return lista;
 }
@@ -155,9 +156,10 @@ public List<Pedido> listarPorUsuario(Long usuarioId) throws SQLException {
 
             detallePedidoService.modificarCantidad(detalleId, detalleActual, nuevaCantidad);
 
-            double nuevoTotal = detalles.stream()
-                    .mapToDouble(DetallePedido::getSubTotal)
-                    .sum();
+            List<DetallePedido> detallesActualizados = detallePedidoService.listarPorPedido(pedidoId);
+            double nuevoTotal = detallesActualizados.stream()
+                .mapToDouble(DetallePedido::getSubTotal)
+                .sum();
             pedido.setTotal(nuevoTotal);
             super.actualizar(pedido);
 

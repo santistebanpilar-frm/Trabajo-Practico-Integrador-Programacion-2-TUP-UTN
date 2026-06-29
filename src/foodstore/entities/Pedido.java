@@ -28,6 +28,7 @@ public class Pedido extends Base implements Calculable{
         super();
         this.fecha = LocalDate.now();
         this.estado = Estado.PENDIENTE;
+        this.formaPago = formaPago;
         this.total = 0.0;
     }
 

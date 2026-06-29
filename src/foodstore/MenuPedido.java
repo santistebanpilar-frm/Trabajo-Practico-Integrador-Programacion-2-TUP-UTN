@@ -104,6 +104,8 @@ public class MenuPedido {
         producto.setId(idProducto);
         detalle.setProducto(producto);
         detalle.setCantidad(cantidad);
+        String formaPagoStr = lector.leerTexto("Forma de pago (EFECTIVO, TARJETA, TRANSFERENCIA): ");
+        nuevo.setFormaPago(FormaPago.valueOf(formaPagoStr.toUpperCase()));
         detalleService.prepararDetalle(detalle);
         detallesSolicitados.add(detalle); // se acumula en la lista, no en el pedido
         String continuar = lector.leerTexto("¿Agregar otro detalle? (S/N): ");
