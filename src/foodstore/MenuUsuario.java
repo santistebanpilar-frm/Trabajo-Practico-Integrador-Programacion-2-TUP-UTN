@@ -69,8 +69,9 @@ public class MenuUsuario {
         nuevo.setMail(lector.leerTexto("Mail: "));
         nuevo.setCelular(lector.leerTexto("Celular: "));
         nuevo.setContrasenia(lector.leerTexto("Contrasenia: "));
-        String rolStr = lector.leerTexto("Rol (ej: ADMIN, USUARIO): ");
-        nuevo.setRol(Rol.valueOf(rolStr.toUpperCase()));
+        Integer rolNum = lector.leerEntero("Rol (1 = ADMIN, 2 = USUARIO)");
+        nuevo.setRol(Rol.rolNumero(rolNum));
+        
 
         usuarioService.crear(nuevo);
         System.out.println("Usuario creado exitosamente.\n");
