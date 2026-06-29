@@ -12,6 +12,6 @@ package enums;
  */
 public enum FormaPago  {
     TARJETA,
-    TRANSFERECIA,
+    TRANSFERENCIA,
     EFECTIVO;
 }
