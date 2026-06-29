@@ -12,6 +12,7 @@ public class DetallePedido extends Base{
     private Integer cantidad;
     private Double subtotal;
     private Producto producto;
+    private Long idPedido;
     
     //Sobrecarga
     public DetallePedido() {
@@ -46,6 +47,11 @@ public class DetallePedido extends Base{
     public void setProducto(Producto producto) {
         this.producto = producto;
     }
+
+    public void setIdPedido(Long idPedido) {
+        this.idPedido = idPedido;
+    }
+    
     
     //Getters
     public Integer getCantidad() {
@@ -57,6 +63,10 @@ public class DetallePedido extends Base{
     public Producto getProducto() {
         return producto;
     }
+    public Long getIdPedido() {
+        return idPedido;
+    }
+    
 
     @Override
     public String toString() {
