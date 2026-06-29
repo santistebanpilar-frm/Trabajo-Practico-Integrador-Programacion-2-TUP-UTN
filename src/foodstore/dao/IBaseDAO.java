@@ -13,16 +13,16 @@ import java.util.List;
  */
 public interface IBaseDAO<T> {
     //Create
-    public void crear(T obj) throws BaseDeDatosException;
+    public T crear(T obj) throws BaseDeDatosException;
     
     //Read
     public T leerPorId(Long id) throws BaseDeDatosException;
     public List<T> leerTodos() throws BaseDeDatosException;
     
     //Update
-    public void actualizar(T nuevoObj) throws BaseDeDatosException;
+    public boolean actualizar(T nuevoObj) throws BaseDeDatosException;
     
     //Delete
-    public void eliminar(T obj) throws BaseDeDatosException;
+    public boolean eliminar(T obj) throws BaseDeDatosException;
     
 }

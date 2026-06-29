@@ -14,8 +14,8 @@ import java.util.List;
 public class DetallePedidoDao implements IBaseDAO<DetallePedidoDao>{
 
     @Override
-    public void crear(DetallePedidoDao obj) throws BaseDeDatosException {
-        
+    public DetallePedidoDao crear(DetallePedidoDao obj) throws BaseDeDatosException {
+        return null;
     }
 
     @Override
@@ -29,13 +29,13 @@ public class DetallePedidoDao implements IBaseDAO<DetallePedidoDao>{
     }
 
     @Override
-    public void actualizar(DetallePedidoDao nuevoObj) throws BaseDeDatosException {
-        
+    public boolean actualizar(DetallePedidoDao nuevoObj) throws BaseDeDatosException {
+        return false;
     }
 
     @Override
-    public void eliminar(DetallePedidoDao obj) throws BaseDeDatosException {
-        
+    public boolean eliminar(DetallePedidoDao obj) throws BaseDeDatosException {
+        return false;
     }
     
 }

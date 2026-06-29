@@ -15,8 +15,8 @@ import java.util.List;
 public class UsuarioDao implements IBaseDAO<Usuario>{
 
     @Override
-    public void crear(Usuario obj) throws BaseDeDatosException {
-        
+    public Usuario crear(Usuario obj) throws BaseDeDatosException {
+        return null;
     }
 
     @Override
@@ -30,13 +30,13 @@ public class UsuarioDao implements IBaseDAO<Usuario>{
     }
 
     @Override
-    public void actualizar(Usuario nuevoObj) throws BaseDeDatosException {
-        
+    public boolean actualizar(Usuario nuevoObj) throws BaseDeDatosException {
+        return false;
     }
 
     @Override
-    public void eliminar(Usuario obj) throws BaseDeDatosException {
-        
+    public boolean eliminar(Usuario obj) throws BaseDeDatosException {
+        return false;
     }
     
 }

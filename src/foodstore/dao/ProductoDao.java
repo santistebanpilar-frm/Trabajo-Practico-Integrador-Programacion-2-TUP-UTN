@@ -15,8 +15,8 @@ import java.util.List;
 public class ProductoDao implements IBaseDAO<Producto>{
 
     @Override
-    public void crear(Producto obj) throws BaseDeDatosException {
-        
+    public Producto crear(Producto obj) throws BaseDeDatosException {
+        return null;
     }
 
     @Override
@@ -30,13 +30,13 @@ public class ProductoDao implements IBaseDAO<Producto>{
     }
 
     @Override
-    public void actualizar(Producto nuevoObj) throws BaseDeDatosException {
-        
+    public boolean actualizar(Producto nuevoObj) throws BaseDeDatosException {
+        return false;
     }
 
     @Override
-    public void eliminar(Producto obj) throws BaseDeDatosException {
-        
+    public boolean eliminar(Producto obj) throws BaseDeDatosException {
+        return false;
     }
     
 }
