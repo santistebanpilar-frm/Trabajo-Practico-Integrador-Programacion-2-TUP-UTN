@@ -1,3 +1,8 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+
 package config;
 
 import java.sql.Connection;
@@ -6,6 +11,12 @@ import java.sql.SQLException;
 import java.util.Properties;
 import java.io.IOException;
 import java.io.InputStream;
+
+/**
+ *
+ * @author pilarsg 
+ * 
+ */
 
 public class ConexionDB {
 
@@ -18,8 +29,7 @@ public class ConexionDB {
     private ConexionDB() {
         try {
             Properties props = new Properties();
-            InputStream is = getClass().getClassLoader()
-                    .getResourceAsStream("base.persistence");
+            InputStream is = getClass().getClassLoader().getResourceAsStream("base.persistence");
             props.load(is);
 
             this.url = props.getProperty("db.url");
