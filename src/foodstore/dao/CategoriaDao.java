@@ -51,7 +51,8 @@ public class CategoriaDao implements IBaseDAO<Categoria>{
                 return categoria;
              } catch (SQLException e){
                  throw new BaseDeDatosException("ERROR: No se pudo crear la categoria" + e);
-             }  
+             }
+        
     }
 
     //Read
@@ -77,6 +78,7 @@ public class CategoriaDao implements IBaseDAO<Categoria>{
              } catch (SQLException e){
                  throw new BaseDeDatosException("ERROR: no se pudo buscar la categoria" + e);
              }
+        
     }
 
     @Override
@@ -101,8 +103,8 @@ public class CategoriaDao implements IBaseDAO<Categoria>{
 
         } catch (SQLException e) {
             throw new BaseDeDatosException("ERROR: No se pudieron listar las categorias" + e);
-
           }
+        
     }
 
     //Update
@@ -123,8 +125,8 @@ public class CategoriaDao implements IBaseDAO<Categoria>{
 
         } catch (SQLException e) {
             throw new BaseDeDatosException("ERROR: No se pudo actualizar la categoria" + e);
-
         }
+        
     }
 
     //Delete
@@ -135,11 +137,11 @@ public class CategoriaDao implements IBaseDAO<Categoria>{
         
         try (
                 Connection conn = ConexionDB.getConnection();
-                PreparedStatement stmt = conn.prepareStatement(sql)
+                PreparedStatement stat = conn.prepareStatement(sql)
         ) {
-            stmt.setLong(1, categoria.getId());
+            stat.setLong(1, categoria.getId());
 
-            return stmt.executeUpdate() > 0;
+            return stat.executeUpdate() > 0;
 
         } catch (SQLException e) {
             throw new BaseDeDatosException("ERROR: No se pudo eliminar la categoria" + e);
