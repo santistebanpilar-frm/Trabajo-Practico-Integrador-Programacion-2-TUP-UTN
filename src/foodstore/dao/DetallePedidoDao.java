@@ -50,14 +50,14 @@ public class DetallePedidoDao{
             try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
                     Producto producto = new Producto();
-                    producto.setId(rs.getLong("producto_id"));
+                    producto.setId(rs.getLong("id_producto"));
                     producto.setNombre(rs.getString("nombre"));
                     producto.setPrecio(rs.getDouble("precio"));
                     producto.setStock(rs.getInt("stock"));
 
                     DetallePedido detalle = new DetallePedido(producto, rs.getInt("cantidad"));
                     detalle.setId(rs.getLong("id"));
-                    detalle.setSubTotal(rs.getDouble("sub_total"));
+                    detalle.setSubTotal(rs.getDouble("subtotal"));
 
                     detalles.add(detalle);
                 }

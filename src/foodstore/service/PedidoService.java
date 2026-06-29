@@ -7,6 +7,7 @@ package foodstore.service;
 import java.sql.Connection;
 import foodstore.dao.DetallePedidoDao;
 import foodstore.dao.IBaseDAO;
+import foodstore.dao.PedidoDao;
 import foodstore.entities.DetallePedido;
 import foodstore.entities.Pedido;
 import foodstore.entities.Usuario;
@@ -23,6 +24,7 @@ public class PedidoService extends GenericService<Pedido>{
     private IBaseDAO<Usuario> usuarioDao;
     private DetallePedidoService detallePedidoService;
     private Connection conn;
+    private PedidoDao pedido;
 
     public PedidoService(IBaseDAO<Usuario> usuarioDao, DetallePedidoService detallePedidoService, Connection conn, IBaseDAO<Pedido> dao) {
         super(dao);
@@ -32,52 +34,53 @@ public class PedidoService extends GenericService<Pedido>{
     }
 
     
-    public Pedido crearConDetalles(Pedido pedido)throws SQLException{
-        if(pedido == null){
-            throw new SQLException("El pedido no puede ser nulo");
+    public Pedido crearConDetalles(Pedido pedido, List<DetallePedido> detallesSolicitados)throws SQLException{
+        if (pedido == null) {
+        throw new SQLException("El pedido no puede ser nulo");
+    }
+    if (pedido.getUsuario() == null || pedido.getUsuario().getId() == null) {
+        throw new SQLException("El Usuario es obligatorio");
+    }
+    Optional<Usuario> usuario = usuarioDao.leer(pedido.getUsuario().getId());
+    if (usuario.isEmpty()) {
+        throw new SQLException("El Usuario no existe");
+    }
+    pedido.setUsuario(usuario.get());
+
+    if (detallesSolicitados == null || detallesSolicitados.isEmpty()) {
+        throw new SQLException("El pedido debe tener al menos un producto");
+    }
+
+    try {
+        conn.setAutoCommit(false);
+        
+        for (DetallePedido detalle : detallesSolicitados) {
+            pedido.addDetallePedido(detalle); 
+    }
+
+        super.crear(pedido);
+
+        for (DetallePedido detalle : pedido.getDetalles()) {
+            detallePedidoService.guardar(detalle, pedido.getId());
         }
-        if(pedido.getUsuario() == null || pedido.getUsuario().getId() == null){
-            throw new SQLException("El Usuario es obligatorio");
+
+        conn.commit();
+        return pedido;
+
+    } catch (SQLException e) {
+        try {
+            conn.rollback();
+        } catch (SQLException ex) {
+            throw new SQLException("Error al revertir la transacción", ex); // era e, debería ser ex
         }
-        Optional<Usuario> usuario = usuarioDao.leer(pedido.getUsuario().getId());
-        if(usuario.isEmpty()){
-            throw new SQLException("El Usuario no existe");
+        throw new SQLException("Error al crear el pedido, se revirtió la operación", e);
+    } finally {
+        try {
+            conn.setAutoCommit(true);
+        } catch (SQLException e) {
+            throw new SQLException("Error al restaurar autoCommit", e);
         }
-        pedido.setUsuario(usuario.get());
-        if(pedido.getDetalles() == null || pedido.getDetalles().isEmpty()){
-            throw new SQLException("El pedido debe tener al menos un producto");
-        }
-        try{
-            conn.setAutoCommit(false);
-            
-            
-            double totalCalculado = 0.0;
-            for(DetallePedido detalle : pedido.getDetalles()){
-                detallePedidoService.prepararDetalle(detalle);
-                totalCalculado += detalle.getSubTotal();
-            }
-            
-            pedido.setTotal(totalCalculado);
-            super.crear(pedido);
-            for(DetallePedido detalle : pedido.getDetalles()){
-                detallePedidoService.guardar(detalle, pedido.getId());
-            }
-            conn.commit();
-            return pedido;
-        }catch (SQLException e){
-            try{
-                conn.rollback();
-            }catch (SQLException ex){
-                throw new SQLException("Error al evitar la transaccion", e);
-            }
-            throw new SQLException("Error al crear el Pedido, se revirtio la oprecion", e);
-        }finally{
-            try{
-                conn.setAutoCommit(true);
-            }catch (SQLException e){
-                throw new SQLException("Error al restaurar autoCommit", e);
-            }
-        }
+    }
     }
     @Override
     public Optional<Pedido> leer(Long id) throws SQLException {
@@ -96,6 +99,18 @@ public class PedidoService extends GenericService<Pedido>{
         }
         return lista;
     }
+    // ProductoService
+public List<Pedido> listarPorUsuario(Long usuarioId) throws SQLException {
+    Optional<Pedido> categoria = pedido.leer(usuarioId);
+    if (categoria.isEmpty()) {
+        throw new SQLException("La categoria no existe o esta eliminada");
+    }
+    List<Pedido> lista = pedido.listarPorUsuario(usuarioId);
+    if (lista.isEmpty()) {
+        throw new SQLException("No hay productos para esta categoria");
+    }
+    return lista;
+}
     @Override
     public boolean actualizar(Pedido pedido) throws SQLException {
         leer(pedido.getId());

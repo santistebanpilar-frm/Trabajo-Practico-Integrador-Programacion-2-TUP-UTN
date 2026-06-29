@@ -77,6 +77,23 @@ public class ProductoDao implements IBaseDAO<Producto> {
         }
         return lista;
     }
+    
+    // ProductoDao
+public List<Producto> listarPorCategoria(Long categoriaId) throws SQLException {
+    List<Producto> lista = new ArrayList<>();
+    String sql = "SELECT * FROM producto WHERE id_categoria = ? AND eliminado = false ORDER BY nombre ASC";
+    try (PreparedStatement ps = conn.prepareStatement(sql)) {
+        ps.setLong(1, categoriaId);
+        try (ResultSet rs = ps.executeQuery()) {
+            while (rs.next()) {
+                lista.add(mapearFila(rs));
+            }
+        }
+    } catch (SQLException e) {
+        throw new SQLException("Error al listar productos por categoria", e);
+    }
+    return lista;
+}
 
     @Override
     public boolean actualizar(Producto producto) throws SQLException{

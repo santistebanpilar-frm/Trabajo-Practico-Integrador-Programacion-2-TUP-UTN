@@ -76,6 +76,21 @@ public class PedidoDao implements IBaseDAO<Pedido>{
         }
         return lista;
     }
+    
+    // PedidoDao
+public List<Pedido> listarPorUsuario(Long usuarioId) throws SQLException {
+    List<Pedido> lista = new ArrayList<>();
+    String sql = "SELECT * FROM pedido WHERE id_usuario = ? AND eliminado = false ORDER BY fecha DESC";
+    try (PreparedStatement ps = conn.prepareStatement(sql)) {
+        ps.setLong(1, usuarioId);
+        try (ResultSet rs = ps.executeQuery()) {
+            while (rs.next()) lista.add(mapearFila(rs));
+        }
+    } catch (SQLException e) {
+        throw new SQLException("Error al listar pedidos del usuario", e);
+    }
+    return lista;
+}
 
     @Override
     public boolean actualizar(Pedido pedido) throws SQLException {

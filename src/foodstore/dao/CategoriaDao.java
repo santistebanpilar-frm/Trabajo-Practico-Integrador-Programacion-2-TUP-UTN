@@ -40,6 +40,9 @@ public class CategoriaDao implements IBaseDAO<Categoria>{
             }
             return categoria;
         }catch (SQLException e){
+            if (e.getMessage() != null && e.getMessage().contains("Duplicate")){
+                throw new SQLException("Ya existe una categoria con ese nombre");
+            }
             throw new SQLException("Error al crear categoria", e);
         }
     }
@@ -87,6 +90,9 @@ public class CategoriaDao implements IBaseDAO<Categoria>{
             int filas = ps.executeUpdate();
             return filas == 1;
         }catch (SQLException e){
+            if (e.getMessage() != null && e.getMessage().contains("Duplicate")){
+                throw new SQLException("Ya existe una categoria con ese nombre");
+            }
             throw new SQLException("Error al actualizar categoria", e);
         }
     }

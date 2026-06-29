@@ -16,12 +16,14 @@ public class Consola {
     public Consola(Scanner sc) {
         this.sc = sc;
     }
-    public void limpiarPantalla(){
+    public static void limpiarPantalla(){
         try{
             final String os = System.getProperty("os.name");
             
             if(os.contains("Windows")){
                 new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
+            }else{
+                new ProcessBuilder("clear").inheritIO().start().waitFor();
             }
         }catch(Exception e){
             for(int i = 0; i<20; i++){

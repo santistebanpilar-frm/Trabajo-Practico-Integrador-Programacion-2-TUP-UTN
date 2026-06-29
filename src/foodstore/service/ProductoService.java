@@ -5,6 +5,7 @@
 package foodstore.service;
 
 import foodstore.dao.IBaseDAO;
+import foodstore.dao.ProductoDao;
 import foodstore.entities.Categoria;
 import foodstore.entities.Producto;
 import foodstore.exception.ValidacionException;
@@ -19,6 +20,7 @@ import java.util.Optional;
 public class ProductoService extends GenericService<Producto>{
     private IBaseDAO<Categoria> categoriaDao;
     private IBaseDAO<Producto> productoDao;
+    private ProductoDao producto;
 
     public ProductoService(IBaseDAO<Categoria> categoriaDao, IBaseDAO<Producto> dao) {
         super(dao);
@@ -50,6 +52,19 @@ public class ProductoService extends GenericService<Producto>{
         }
         return lista;
     }
+    
+    // ProductoService
+public List<Producto> listarPorCategoria(Long categoriaId) throws SQLException {
+    Optional<Categoria> categoria = categoriaDao.leer(categoriaId);
+    if (categoria.isEmpty()) {
+        throw new SQLException("La categoria no existe o esta eliminada");
+    }
+    List<Producto> lista = producto.listarPorCategoria(categoriaId);
+    if (lista.isEmpty()) {
+        throw new SQLException("No hay productos para esta categoria");
+    }
+    return lista;
+}
     @Override
     public boolean actualizar(Producto producto) throws SQLException {
         leer(producto.getId());

@@ -107,8 +107,8 @@ public class Usuario extends Base{
     @Override
     public String toString() {
         return "Usuario{" + 
-                "id=" + getId() +
-                "nombre=" + nombre + 
+                " id=" + getId() +
+                ", nombre=" + nombre + 
                 ", apellido=" + apellido + 
                 ", mail=" + mail + 
                 ", rol=" + rol +  '}';

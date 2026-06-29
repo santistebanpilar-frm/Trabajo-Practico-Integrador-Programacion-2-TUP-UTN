@@ -20,15 +20,17 @@ public class DetallePedido extends Base{
     public DetallePedido(Producto producto, Integer cantidad) {
         super();
         this.cantidad = cantidad;
-        this.subTotal = calcularSubTotal();
         this.producto = producto;
+        this.subTotal = calcularSubTotal();
+        
     }
 
     public DetallePedido( Long id, Producto producto, Integer cantidad) {
         super(id);
         this.cantidad = cantidad;
-        this.subTotal = calcularSubTotal();
         this.producto = producto;
+        this.subTotal = calcularSubTotal();
+        
     }
     
     public Double calcularSubTotal(){
@@ -66,8 +68,8 @@ public class DetallePedido extends Base{
     public String toString() {
         return "DetallePedido{" + 
                 "id=" + getId() +
-                "cantidad=" + cantidad + 
-                ", producto=" + producto.getNombre() +
-                "subtotal=" + subTotal + '}';
+                ", cantidad=" + cantidad + 
+                ", producto=" + (producto != null ? producto.getNombre() : "N/A") +
+                ", subtotal=" + subTotal + '}';
     }
 }

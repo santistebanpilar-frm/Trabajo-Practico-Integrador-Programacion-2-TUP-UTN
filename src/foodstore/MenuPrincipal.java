@@ -36,7 +36,9 @@ public class MenuPrincipal {
             System.out.println("5. Salir");
             int opcion = lector.leerEntero("Seleccione una opcion: ");
             switch (opcion){
-                case 1-> menuCategorias.mostrar();
+                case 1->{ 
+                    lector.limpiarPantalla();
+                    menuCategorias.mostrar();}
                 case 2-> menuProductos.mostrar();
                 case 3-> menuPedido.mostrar();
                 case 4-> menuUsuario.mostrar();

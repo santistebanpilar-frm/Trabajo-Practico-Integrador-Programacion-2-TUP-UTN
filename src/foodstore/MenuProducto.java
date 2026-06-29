@@ -33,6 +33,7 @@ public class MenuProducto {
             System.out.println("2. Crear Producto");
             System.out.println("3. Editar Producto");
             System.out.println("4. Eliminar Producto");
+            System.out.println("5. Listar Productos por Categoria");
             System.out.println("0. Volver al menu Principal");
             int opcion = lector.leerEntero("Seleccione opción: ");
             
@@ -42,6 +43,7 @@ public class MenuProducto {
                     case 2 -> crear();
                     case 3 -> editar();
                     case 4 -> eliminar();
+                    case 5-> listarPorCategoria();
                     case 0 -> volver = true;
                     default -> System.out.println("Opción inválida.\n");
                     
@@ -81,6 +83,19 @@ public class MenuProducto {
             p.getId(), p.getNombre(), p.getPrecio(), p.getStock(), p.getCategoria().getId()
         ));
     }
+    private void listarPorCategoria() throws Exception {
+    long idCategoria = lector.leerEntero("ID de la categoría: ");
+    List<Producto> productos = productoService.listarPorCategoria(idCategoria);
+    System.out.println("\n=====PRODUCTOS DE LA CATEGORÍA " + idCategoria + "=====");
+    if (productos.isEmpty()) {
+        System.out.println("No hay productos para esta categoría.\n");
+        return;
+    }
+    productos.forEach(p -> System.out.printf(
+        "ID: %d | %s | $%.2f | Stock: %d | Cat: %d%n",
+        p.getId(), p.getNombre(), p.getPrecio(), p.getStock(), p.getCategoria().getId()
+    ));
+}
     private void editar() throws Exception {
         long id = lector.leerEntero("ID del producto a editar: ");
         Producto actual = productoService.leer(id).orElseThrow(

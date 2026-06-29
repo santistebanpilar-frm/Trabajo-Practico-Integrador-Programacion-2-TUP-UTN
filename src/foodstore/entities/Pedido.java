@@ -60,10 +60,21 @@ public class Pedido extends Base implements Calculable{
     }
     
     public void addDetallePedido(Producto producto, Integer cantidad){
+        if(producto == null){
+            throw new IllegalArgumentException("El producto no puede ser nulo");
+        }
+        if(cantidad == null || cantidad <= 0){
+            throw new IllegalArgumentException("La cantidad debe ser mayor a 0");
+        }
         DetallePedido dp = new DetallePedido(producto, cantidad);
         detalles.add(dp);
         calcularTotal();
     }
+    public void addDetallePedido(DetallePedido detalle) {
+    if (detalle == null) throw new IllegalArgumentException("El detalle no puede ser nulo");
+    detalles.add(detalle);
+    calcularTotal();
+}
     
     public DetallePedido findDetallePedidoByProducto(Producto producto){
         return  detalles.stream()
@@ -135,11 +146,11 @@ public class Pedido extends Base implements Calculable{
     public String toString() {
         return "Pedido{" + 
                 "id=" + getId() +
-                "fecha=" + fecha + 
+                ", fecha=" + fecha + 
                 ", estado=" + estado + 
                 ", total=" + total + 
                 ", formaPago=" + formaPago + 
                 ", cantidadDetalles=" + detalles.size() + 
-                ", usuario=" + usuario.getNombre() + '}';
+                ", usuario=" + (usuario != null ? usuario.getNombre() : "N/A") + '}';
     }
 }

@@ -62,6 +62,7 @@ public class CategoriaService extends GenericService<Categoria>{
     @Override
     public boolean eliminar(Long id) throws SQLException {
         leer(id);
+        
         return super.eliminar(id); 
     }
 }

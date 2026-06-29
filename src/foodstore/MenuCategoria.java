@@ -5,7 +5,9 @@
 package foodstore;
 
 import foodstore.entities.Categoria;
+import foodstore.entities.Producto;
 import foodstore.service.CategoriaService;
+import foodstore.service.ProductoService;
 import java.util.List;
 import java.util.Optional;
 
@@ -34,6 +36,7 @@ public class MenuCategoria {
             System.out.println("2. Crear Categoria");
             System.out.println("3. Editar Categoria");
             System.out.println("4. Eliminar Categoria");
+            
             System.out.println("0. Volver al menu Principal");
             int opcion = lector.leerEntero("Seleccione una opcion: ");
             try{
@@ -42,6 +45,7 @@ public class MenuCategoria {
                     case 2 -> crear();
                     case 3-> editar();
                     case 4-> eliminar();
+                    
                     case 0-> volver = true;
                     default-> System.out.println("Opcion invalida. \n");
                 }
@@ -70,6 +74,8 @@ public class MenuCategoria {
             c.getId(), c.getNombre(), c.getDescripcion()
         ));
         }
+    
+    
     private void editar() throws Exception {
         long id = lector.leerEntero("ID de la categoría a editar: ");
         Categoria actual = categoriaService.leer(id).orElseThrow(

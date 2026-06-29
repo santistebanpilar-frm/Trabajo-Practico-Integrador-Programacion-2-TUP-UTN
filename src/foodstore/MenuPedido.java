@@ -12,6 +12,7 @@ import foodstore.enums.Estado;
 import foodstore.enums.FormaPago;
 import foodstore.service.DetallePedidoService;
 import foodstore.service.PedidoService;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -38,6 +39,7 @@ public class MenuPedido {
             System.out.println("2. Crear Pedido con Detalles");
             System.out.println("3. Editar Pedido");
             System.out.println("4. Eliminar Pedido");
+            System.out.println("5. Listar Pedidos por Usuario");
             System.out.println("0. Volver al menú Principal");
 
             int opcion = lector.leerEntero("Seleccione opción: ");
@@ -48,6 +50,7 @@ public class MenuPedido {
                     case 2 -> crearConDetalles();
                     case 3 -> editar();
                     case 4 -> eliminar();
+                    case 5-> listarPorUsuario();
                     case 0 -> volver = true;
                     default -> System.out.println("Opción inválida.\n");
                 }
@@ -69,43 +72,46 @@ public class MenuPedido {
             p.getId(), p.getUsuario().getId(), p.getEstado(), p.getFormaPago(), p.getTotal(), p.getFecha()
         ));
     }
+    private void listarPorUsuario() throws Exception {
+    long idUsuario = lector.leerEntero("ID del usuario: ");
+    List<Pedido> pedidos = pedidoService.listarPorUsuario(idUsuario);
+    System.out.println("\n=====PEDIDOS DEL USUARIO " + idUsuario + "=====");
+    if (pedidos.isEmpty()) {
+        System.out.println("Este usuario no tiene pedidos.\n");
+        return;
+    }
+    pedidos.forEach(p -> System.out.printf(
+        "ID: %d | Estado: %s | Pago: %s | Total: %.2f | Fecha: %s%n",
+        p.getId(), p.getEstado(), p.getFormaPago(), p.getTotal(), p.getFecha()
+    ));
+}
 
     private void crearConDetalles() throws Exception {
-        Pedido nuevo = new Pedido();
-        long idUsuario = lector.leerEntero("ID Usuario: ");
-        Usuario usuario = new Usuario();
-        usuario.setId(idUsuario);
-        nuevo.setUsuario(usuario);
+    Pedido nuevo = new Pedido();
+    long idUsuario = lector.leerEntero("ID Usuario: ");
+    Usuario usuario = new Usuario();
+    usuario.setId(idUsuario);
+    nuevo.setUsuario(usuario);
 
-        nuevo.setFecha(java.time.LocalDate.now());
-        nuevo.setEstado(Estado.PENDIENTE);
-        nuevo.setFormaPago(FormaPago.EFECTIVO);
+    List<DetallePedido> detallesSolicitados = new ArrayList<>(); // lista aparte
 
-        boolean agregarMas = true;
-        while (agregarMas) {
-            long idProducto = lector.leerEntero("ID Producto: ");
-            int cantidad = lector.leerEntero("Cantidad: ");
-
-            DetallePedido detalle = new DetallePedido();
-            Producto producto = new Producto();
-            producto.setId(idProducto);
-            detalle.setProducto(producto);
-            detalle.setCantidad(cantidad);
-
-            // Validar y preparar detalle con stock y subtotal
-            detalleService.prepararDetalle(detalle);
-
-            // Agregar al pedido en memoria
-            nuevo.getDetalles().add(detalle);
-
-            String continuar = lector.leerTexto("¿Agregar otro detalle? (S/N): ");
-            agregarMas = continuar.equalsIgnoreCase("S");
-        }
-
-        nuevo.calcularTotal(); // interfaz Calculable
-
-        pedidoService.crearConDetalles(nuevo);
-        System.out.println("Pedido creado exitosamente.\n");
+    boolean agregarMas = true;
+    while (agregarMas) {
+        long idProducto = lector.leerEntero("ID Producto: ");
+        int cantidad = lector.leerEntero("Cantidad: ");
+        DetallePedido detalle = new DetallePedido();
+        Producto producto = new Producto();
+        producto.setId(idProducto);
+        detalle.setProducto(producto);
+        detalle.setCantidad(cantidad);
+        detalleService.prepararDetalle(detalle);
+        detallesSolicitados.add(detalle); // se acumula en la lista, no en el pedido
+        String continuar = lector.leerTexto("¿Agregar otro detalle? (S/N): ");
+        agregarMas = continuar.equalsIgnoreCase("S");
+    }
+    // Ya no se llama nuevo.calcularTotal() — el Service lo hace internamente
+    pedidoService.crearConDetalles(nuevo, detallesSolicitados); // se pasa la lista separada
+    System.out.println("Pedido creado exitosamente.\n");
     }
 
     private void editar() throws Exception {
@@ -126,14 +132,11 @@ public class MenuPedido {
         if (modificarDetalles.equalsIgnoreCase("S")) {
             long idDetalle = lector.leerEntero("ID del detalle a modificar: ");
             int nuevaCantidad = lector.leerEntero("Nueva cantidad: ");
-
+            DetallePedido detalleModificado = new DetallePedido();
+            detalleModificado.setId(idDetalle);
+            detalleModificado.setCantidad(nuevaCantidad);
+            pedidoService.modificarDetalle(actual.getId(), detalleModificado);
             
-            for (DetallePedido d : actual.getDetalles()) {
-                if (d.getId().equals(idDetalle)) {
-                    detalleService.modificarCantidad(idDetalle, d, nuevaCantidad);
-                    break;
-                }
-            }
         }
 
         pedidoService.actualizar(actual);
