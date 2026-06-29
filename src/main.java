@@ -1,10 +1,12 @@
 
-import config.ConexionDB;
 import dao.CategoriaDAO;
-import entities.Categoria;
-import exception.PersistenciaException;
-import java.sql.Connection;
-import java.sql.SQLException;
+import dao.PedidoDAO;
+import dao.ProductoDAO;
+import dao.UsuarioDAO;
+import service.CategoriaService;
+import service.PedidoService;
+import service.ProductoService;
+import service.UsuarioService;
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -17,26 +19,21 @@ import java.sql.SQLException;
  */
 public class main {
     public static void main(String[] args) {
-    try {
-        Connection conn = ConexionDB.getInstance().getConnection();
-        if (conn != null) {
-            System.out.println("Conexión exitosa!");
-        }
-    } catch (SQLException e) {
-        System.out.println("Error al conectar: " + e.getMessage());
+        
+        CategoriaDAO categoriaDAO = new CategoriaDAO();
+        ProductoDAO productoDAO   = new ProductoDAO();
+        UsuarioDAO usuarioDAO     = new UsuarioDAO();
+        PedidoDAO pedidoDAO       = new PedidoDAO();
+
+        CategoriaService categoriaService = new CategoriaService(categoriaDAO);
+        ProductoService productoService   = new ProductoService(productoDAO, categoriaService);
+        UsuarioService usuarioService     = new UsuarioService(usuarioDAO);
+        PedidoService pedidoService       = new PedidoService(pedidoDAO, usuarioService, productoService);
+ 
+        MenuPrincipal menu = new MenuPrincipal(
+                categoriaService, productoService, usuarioService, pedidoService
+        );
+        menu.mostrar();
+        
     }
-    CategoriaDAO categoriaDAO = new CategoriaDAO();
-
-        // Armás el objeto a mano
-        Categoria nueva = new Categoria("Pizzas", "Pizzas y empanadas");
-
-        // Llamás directo al DAO
-        try {
-            Categoria guardada = categoriaDAO.crear(nueva);
-            System.out.println("Categoría creada con id: " + guardada.getId());
-            System.out.println(guardada);
-        } catch (PersistenciaException e) {
-            System.out.println("Error: " + e.getMessage());
-        }
-}
 }
