@@ -51,7 +51,7 @@ public class ProductoService extends GenericService<Producto> {
         return productoDAO.listarPorCategoria(categoriId);
     }
     
-    public boolean actulizar(Long id, String nuevoNombre, String nuevaDescripcion, Double nuevoPrecio, Integer nuevoStock, String nuevaImagen, Long nuevaCategoriaId){
+    public boolean actualizar(Long id, String nuevoNombre, String nuevaDescripcion, Double nuevoPrecio, Integer nuevoStock, String nuevaImagen, Long nuevaCategoriaId){
         Producto producto = buscarPorId(id);
         if (nuevoNombre != null && !nuevoNombre.trim().isEmpty()) {
             producto.setNombre(nuevoNombre);
