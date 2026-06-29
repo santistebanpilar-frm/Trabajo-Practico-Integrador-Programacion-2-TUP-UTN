@@ -25,15 +25,14 @@ public class MenuUsuario {
     public void mostrar() {
         boolean volver = false;
         while (!volver) {
-            lector.limpiarPantalla();
             System.out.println("========Gestión de Usuarios========");
             System.out.println("1. Listar Usuarios");
             System.out.println("2. Crear Usuario");
             System.out.println("3. Editar Usuario");
             System.out.println("4. Eliminar Usuario");
-            System.out.println("0. Volver al menú Principal");
+            System.out.println("0. Volver al menu Principal");
 
-            int opcion = lector.leerEntero("Seleccione opción: ");
+            int opcion = lector.leerEntero("Seleccione opcion: ");
 
             try {
                 switch (opcion) {
@@ -42,7 +41,7 @@ public class MenuUsuario {
                     case 3 -> editar();
                     case 4 -> eliminar();
                     case 0 -> volver = true;
-                    default -> System.out.println("Opción inválida.\n");
+                    default -> System.out.println("Opcion invalida.\n");
                 }
             } catch (Exception e) {
                 System.out.println("Error: " + e.getMessage() + "\n");

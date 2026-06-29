@@ -33,14 +33,13 @@ public class MenuPedido {
     public void mostrar() {
         boolean volver = false;
         while (!volver) {
-            lector.limpiarPantalla();
             System.out.println("========Gestión de Pedidos========");
             System.out.println("1. Listar Pedidos");
             System.out.println("2. Crear Pedido con Detalles");
             System.out.println("3. Editar Pedido");
             System.out.println("4. Eliminar Pedido");
             System.out.println("5. Listar Pedidos por Usuario");
-            System.out.println("0. Volver al menú Principal");
+            System.out.println("0. Volver al menu Principal");
 
             int opcion = lector.leerEntero("Seleccione opción: ");
 
@@ -52,7 +51,7 @@ public class MenuPedido {
                     case 4 -> eliminar();
                     case 5-> listarPorUsuario();
                     case 0 -> volver = true;
-                    default -> System.out.println("Opción inválida.\n");
+                    default -> System.out.println("Opción invalida.\n");
                 }
             } catch (Exception e) {
                 System.out.println("Error: " + e.getMessage() + "\n");

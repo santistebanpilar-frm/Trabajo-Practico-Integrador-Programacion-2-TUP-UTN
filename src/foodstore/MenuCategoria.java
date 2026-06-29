@@ -30,7 +30,6 @@ public class MenuCategoria {
     public void mostrar(){
         boolean volver = false;
         while(!volver){
-            lector.limpiarPantalla();
             System.out.println("========Gestion de Categorias========");
             System.out.println("1. Listar Categorias");
             System.out.println("2. Crear Categoria");
@@ -66,7 +65,7 @@ public class MenuCategoria {
         List<Categoria> categorias = categoriaService.listar();
         System.out.println("\n=====Lista de Categorias=====");
         if (categorias.isEmpty()) {
-            System.out.println("No hay categorías cargadas.\n");
+            System.out.println("No hay categorias cargadas.\n");
             return;
         }
         categorias.forEach(c -> System.out.printf(
@@ -79,20 +78,20 @@ public class MenuCategoria {
     private void editar() throws Exception {
         long id = lector.leerEntero("ID de la categoría a editar: ");
         Categoria actual = categoriaService.leer(id).orElseThrow(
-            () -> new Exception("Categoría no encontrada")
+            () -> new Exception("Categoria no encontrada")
         );
 
         actual.setNombre(lector.leerTexto("Nuevo nombre (" + actual.getNombre() + "): "));
         actual.setDescripcion(lector.leerTexto("Nueva descripción (" + actual.getDescripcion() + "): "));
 
         categoriaService.actualizar(actual);
-        System.out.println("Categoría actualizada.\n");
+        System.out.println("Categoria actualizada.\n");
     }
 
     private void eliminar() throws Exception {
-        long id = lector.leerEntero("ID de la categoría a eliminar: ");
+        long id = lector.leerEntero("ID de la categoria a eliminar: ");
         categoriaService.eliminar(id);
-        System.out.println("Categoría eliminada.\n");
+        System.out.println("Categoria eliminada.\n");
     }
     
 }

@@ -96,7 +96,7 @@ public class PedidoService extends GenericService<Pedido>{
         
         return super.listar();
     }
-    // ProductoService
+    
 public List<Pedido> listarPorUsuario(Long usuarioId) throws SQLException {
     Optional<Usuario> usuario  = usuarioDao.leer(usuarioId);
     if (usuario.isEmpty()) {

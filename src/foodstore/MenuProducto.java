@@ -27,8 +27,7 @@ public class MenuProducto {
     public void mostrar() {
         boolean volver = false;
         while (!volver) {
-            lector.limpiarPantalla();
-            System.out.println("\n=====GESTIÓN DE PRODUCTOS=====");
+            System.out.println("\n=====GESTION DE PRODUCTOS=====");
             System.out.println("1. Listar Productos");
             System.out.println("2. Crear Producto");
             System.out.println("3. Editar Producto");
@@ -45,7 +44,7 @@ public class MenuProducto {
                     case 4 -> eliminar();
                     case 5-> listarPorCategoria();
                     case 0 -> volver = true;
-                    default -> System.out.println("Opción inválida.\n");
+                    default -> System.out.println("Opción invalida.\n");
                     
                 }
             } catch (Exception e) {
@@ -57,14 +56,14 @@ public class MenuProducto {
     private void crear() throws Exception {
         Producto nuevo = new Producto();
         nuevo.setNombre(lector.leerTexto("Nombre: "));
-        nuevo.setDescripcion(lector.leerTexto("Descripción: "));
+        nuevo.setDescripcion(lector.leerTexto("Descripcion: "));
         nuevo.setPrecio(lector.leerDouble("Precio: "));
         nuevo.setStock(lector.leerEntero("Stock: "));
         nuevo.setImagen(lector.leerTexto("Imagen: "));
         int disponibleInt = lector.leerEntero("Disponible (1=Sí, 0=No): ");
         nuevo.setDisponible(disponibleInt == 1);
         Categoria categoria = new Categoria();
-        categoria.setId((long) lector.leerEntero("ID Categoría: "));
+        categoria.setId((long) lector.leerEntero("ID Categoria: "));
         nuevo.setCategoria(categoria);
         
         productoService.crear(nuevo);
@@ -103,7 +102,7 @@ public class MenuProducto {
         );
 
         actual.setNombre(lector.leerTexto("Nuevo nombre (" + actual.getNombre() + "): "));
-        actual.setDescripcion(lector.leerTexto("Nueva descripción (" + actual.getDescripcion() + "): "));
+        actual.setDescripcion(lector.leerTexto("Nueva descripcion (" + actual.getDescripcion() + "): "));
         actual.setPrecio(lector.leerDouble("Nuevo precio (" + actual.getPrecio() + "): "));
         actual.setStock(lector.leerEntero("Nuevo stock (" + actual.getStock() + "): "));
         actual.setImagen(lector.leerTexto("Nueva imagen (" + actual.getImagen() + "): "));

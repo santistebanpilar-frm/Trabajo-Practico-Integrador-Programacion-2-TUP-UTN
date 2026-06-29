@@ -137,7 +137,7 @@ public List<Producto> listarPorCategoria(Long categoriaId) throws SQLException {
         producto.setDisponible(rs.getBoolean("disponible"));
         producto.setEliminado(rs.getBoolean("eliminado"));
 
-        // Relación con categoría (solo id, luego se puede enriquecer con CategoriaDao)
+        
         Categoria categoria = new Categoria();
         categoria.setId(rs.getLong("id_categoria"));
         producto.setCategoria(categoria);

@@ -27,7 +27,6 @@ public class MenuPrincipal {
     public void iniciar(){
         boolean salir = false;
         while(!salir){
-            lector.limpiarPantalla();
             System.out.println("==========Menu Principal==========");
             System.out.println("1. Gestion de Categoria");
             System.out.println("2. Gestion de Productos");

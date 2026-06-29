@@ -51,18 +51,17 @@ public class Categoria extends Base{
     
     @Override
     public int hashCode() {
-        //Mismo campo que en el equals para matener el contrato
         return Objects.hash(nombre);
     }
 
     @Override
     public boolean equals(Object obj) {
-        // Optimizacion: misma referencia en memoria -> iguales.
+        
         if (this == obj) return true;
-        // null check y verificacion de tipo
+        
         if(!(obj instanceof Categoria)) return false;
         
-        // Cast seguro y comparacion por campo significativo
+        
         Categoria c = (Categoria) obj;
         return Objects.equals(nombre, c.nombre);
     }
