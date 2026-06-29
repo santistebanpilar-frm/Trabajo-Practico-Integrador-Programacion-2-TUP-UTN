@@ -21,6 +21,7 @@ public class Pedido extends Base implements Calculable {
     private Double total;
     private FormaPago formaPago;
     private List<DetallePedido> detalles = new ArrayList<>(); //Composicion
+    private Long idUsuario;
     
     //Sobrecarga
     public Pedido() {
@@ -65,6 +66,11 @@ public class Pedido extends Base implements Calculable {
     public void setDetalles(List<DetallePedido> detalles) {
         this.detalles = detalles;
     }
+
+    public void setIdUsuario(Long idUsuario) {
+        this.idUsuario = idUsuario;
+    }
+    
     
     //Getters
     public LocalDate getFecha() {
@@ -82,6 +88,10 @@ public class Pedido extends Base implements Calculable {
     public List<DetallePedido> getDetalles() {
         return detalles;
     }
+    public Long getIdUsuario() {
+        return idUsuario;
+    }
+    
 
     @Override
     public String toString() {
