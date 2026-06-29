@@ -38,8 +38,10 @@ public class ProductoDao implements IBaseDAO<Producto>{
                 stat.setString(3, producto.getDescripcion());
                 stat.setInt(4, producto.getStock());
                 stat.setString(5, producto.getImagen());
-                stat.setBoolean(6, producto.isEliminado());
-                stat.setTimestamp(7, Timestamp.valueOf(producto.getCreatedAt()));
+                stat.setBoolean(6, producto.getDisponible());
+                stat.setBoolean(7, producto.isEliminado());
+                stat.setTimestamp(8, Timestamp.valueOf(producto.getCreatedAt()));
+                
                 stat.executeUpdate();
                 
                 try(
@@ -111,21 +113,24 @@ public class ProductoDao implements IBaseDAO<Producto>{
     @Override
     public boolean actualizar(Producto producto) throws BaseDeDatosException {
         
-        String sql = "UPDATE producto SET nombre = ?, precio = ?, descripcion = ?, stock = ?, imagen = ?, disponible = ?, WHERE id = ?";
+        String sql = "UPDATE producto SET nombre = ?, precio = ?, descripcion = ?, stock = ?, imagen = ?, disponible = ? WHERE id = ?";
         
         try (
               Connection conexion = ConexionDB.getConnection();
               PreparedStatement stat = conexion.prepareStatement(sql)
             ) {
                 stat.setString(1, producto.getNombre());
-                stat.setString(2, producto.getDescripcion());
-                stat.setLong(3, producto.getId());
+                stat.setDouble(2, producto.getPrecio());
+                stat.setString(3, producto.getDescripcion());
+                stat.setInt(4, producto.getStock());
+                stat.setString(5, producto.getImagen());
+                stat.setBoolean(6, producto.getDisponible());
+                stat.setLong(7, producto.getId());
 
             return stat.executeUpdate() > 0;
 
         } catch (SQLException e) {
             throw new BaseDeDatosException("ERROR: No se pudo actualizar el producto" + e);
-
         }
         
     }

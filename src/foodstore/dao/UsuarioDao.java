@@ -122,6 +122,7 @@ public class UsuarioDao implements IBaseDAO<Usuario>{
                 stat.setString(4, usuario.getCelular());
                 stat.setString(5, usuario.getContrasena());
                 stat.setString(6, usuario.getRol().name());
+                stat.setLong(7, usuario.getId());
 
             return stat.executeUpdate() > 0;
 
