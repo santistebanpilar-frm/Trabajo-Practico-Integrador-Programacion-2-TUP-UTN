@@ -17,7 +17,7 @@ public class Usuario extends Base {
     private String apellido;
     private String mail;
     private String celular;
-    private String contraseña;
+    private String contrasena;
     private Rol rol;
     private List<Pedido> pedidos = new ArrayList<>(); //Asociacion
     
@@ -26,24 +26,24 @@ public class Usuario extends Base {
     }
 
     //crear obj
-    public Usuario(String nombre, String apellido, String mail, String celular, String contraseña, Rol rol) {
+    public Usuario(String nombre, String apellido, String mail, String celular, String contrasena, Rol rol) {
         super();
         this.nombre = nombre;
         this.apellido = apellido;
         this.mail = mail;
         this.celular = celular;
-        this.contraseña = contraseña;
+        this.contrasena = contrasena;
         this.rol = rol;
     }
     
     //el obj existe
-    public Usuario(Long id, String nombre, String apellido, String mail, String celular, String contraseña, Rol rol) {
+    public Usuario(Long id, String nombre, String apellido, String mail, String celular, String contrasena, Rol rol) {
         super(id);
         this.nombre = nombre;
         this.apellido = apellido;
         this.mail = mail;
         this.celular = celular;
-        this.contraseña = contraseña;
+        this.contrasena = contrasena;
         this.rol = rol;
     }
     
@@ -64,8 +64,8 @@ public class Usuario extends Base {
         this.celular = celular;
     }
 
-    public void setContraseña(String contraseña) {
-        this.contraseña = contraseña;
+    public void setContrasena(String contrasena) {
+        this.contrasena = contrasena;
     }
 
     public void setRol(Rol rol) {
@@ -85,8 +85,8 @@ public class Usuario extends Base {
     public String getCelular() {
         return celular;
     }
-    public String getContraseña() {
-        return contraseña;
+    public String getContrasena() {
+        return contrasena;
     }
     public Rol getRol() {
         return rol;
@@ -102,7 +102,7 @@ public class Usuario extends Base {
                "APELLIDO: " + apellido + "\n" +
                "MAIL: " + mail + "\n" +
                "CELULAR: " + celular + "\n" +
-               "CONTRASEÑA: " + contraseña + "\n" +
+               "CONTRASENA: " + contrasena + "\n" +
                "ROL: " + rol + "\n";
     }
     
