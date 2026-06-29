@@ -25,7 +25,7 @@ public class MenuUsuario {
     public void mostrar() {
         boolean volver = false;
         while (!volver) {
-            System.out.println("========Gestión de Usuarios========");
+            System.out.println("========Gestion de Usuarios========");
             System.out.println("1. Listar Usuarios");
             System.out.println("2. Crear Usuario");
             System.out.println("3. Editar Usuario");
@@ -87,7 +87,7 @@ public class MenuUsuario {
         actual.setApellido(lector.leerTexto("Nuevo apellido (" + actual.getApellido() + "): "));
         actual.setMail(lector.leerTexto("Nuevo mail (" + actual.getMail() + "): "));
         actual.setCelular(lector.leerTexto("Nuevo celular (" + actual.getCelular() + "): "));
-        actual.setContrasenia(lector.leerTexto("Nueva contraseña (" + actual.getContrasenia() + "): "));
+        actual.setContrasenia(lector.leerTexto("Nueva contrasenia (" + actual.getContrasenia() + "): "));
         String rolStr = lector.leerTexto("Nuevo rol (" + actual.getRol() + "): ");
         actual.setRol(Rol.valueOf(rolStr.toUpperCase()));
 

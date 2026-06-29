@@ -34,7 +34,7 @@ public class MenuProducto {
             System.out.println("4. Eliminar Producto");
             System.out.println("5. Listar Productos por Categoria");
             System.out.println("0. Volver al menu Principal");
-            int opcion = lector.leerEntero("Seleccione opción: ");
+            int opcion = lector.leerEntero("Seleccione opcion: ");
             
             try {
                 switch (opcion) {
@@ -44,7 +44,7 @@ public class MenuProducto {
                     case 4 -> eliminar();
                     case 5-> listarPorCategoria();
                     case 0 -> volver = true;
-                    default -> System.out.println("Opción invalida.\n");
+                    default -> System.out.println("Opcion invalida.\n");
                     
                 }
             } catch (Exception e) {
@@ -85,9 +85,9 @@ public class MenuProducto {
     private void listarPorCategoria() throws Exception {
     long idCategoria = lector.leerEntero("ID de la categoría: ");
     List<Producto> productos = productoService.listarPorCategoria(idCategoria);
-    System.out.println("\n=====PRODUCTOS DE LA CATEGORÍA " + idCategoria + "=====");
+    System.out.println("\n=====PRODUCTOS DE LA CATEGORIA " + idCategoria + "=====");
     if (productos.isEmpty()) {
-        System.out.println("No hay productos para esta categoría.\n");
+        System.out.println("No hay productos para esta categoria.\n");
         return;
     }
     productos.forEach(p -> System.out.printf(
@@ -109,7 +109,7 @@ public class MenuProducto {
         int disponibleInt = lector.leerEntero("Disponible (1=Sí, 0=No): ");
         actual.setDisponible(disponibleInt == 1);
         Categoria cat = new Categoria();
-        cat.setId((long) lector.leerEntero("Nueva categoría ID (" + actual.getCategoria().getId() + "): "));
+        cat.setId((long) lector.leerEntero("Nueva categoria ID (" + actual.getCategoria().getId() + "): "));
         actual.setCategoria(cat);
 
         productoService.actualizar(actual);
