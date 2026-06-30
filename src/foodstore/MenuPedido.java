@@ -103,15 +103,15 @@ public class MenuPedido {
         producto.setId(idProducto);
         detalle.setProducto(producto);
         detalle.setCantidad(cantidad);
-        String formaPagoStr = lector.leerTexto("Forma de pago (EFECTIVO, TARJETA, TRANSFERENCIA): ");
-        nuevo.setFormaPago(FormaPago.valueOf(formaPagoStr.toUpperCase()));
+        Integer formaPagoStr = lector.leerEntero("Forma de pago (1 = TARJETA, 2 = TRANSFERENCIA, 3 = EFECTIVO): ");
+        nuevo.setFormaPago(FormaPago.rolNumero(formaPagoStr));
         detalleService.prepararDetalle(detalle);
-        detallesSolicitados.add(detalle); // se acumula en la lista, no en el pedido
+        detallesSolicitados.add(detalle);
         String continuar = lector.leerTexto("¿Agregar otro detalle? (S/N): ");
         agregarMas = continuar.equalsIgnoreCase("S");
     }
-    // Ya no se llama nuevo.calcularTotal() — el Service lo hace internamente
-    pedidoService.crearConDetalles(nuevo, detallesSolicitados); // se pasa la lista separada
+    
+    pedidoService.crearConDetalles(nuevo, detallesSolicitados);
     System.out.println("Pedido creado exitosamente.\n");
     }
 
