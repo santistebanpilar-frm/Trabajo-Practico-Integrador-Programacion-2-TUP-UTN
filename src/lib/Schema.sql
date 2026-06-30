@@ -1,7 +1,7 @@
-create database if not exists FootStore
+create database if not exists FoodStore
 	character set utf8mb4
 	collate utf8mb4_unicode_ci;
-use FootStore;
+use FoodStore;
 
 create table usuario(
 	id BIGINT auto_increment primary key,
@@ -9,6 +9,7 @@ create table usuario(
 	apellido VARCHAR(30) not null,
 	mail VARCHAR(50) not null unique,
 	celular VARCHAR(20) not null,
+	contrasenia VARCHAR(30) not null,
 	rol VARCHAR(20) not null,
 	eliminado BOOLEAN not null default FALSE
 );
@@ -65,13 +66,3 @@ CREATE TABLE detalle_pedido (
         ON UPDATE CASCADE
         ON DELETE RESTRICT   
 );
-
-
-
-
-
-
-
-
-
-
