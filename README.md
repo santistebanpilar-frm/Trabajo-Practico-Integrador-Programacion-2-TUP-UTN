@@ -43,7 +43,7 @@ e insertar datos de prueba para poder testear el sistema desde el primer arranqu
 Abrí el archivo `src/main/resources/persistence.properties` y completá con tus datos:
 
 ```properties
-db.url=jdbc:mysql://localhost:3306/pedidos_db?useSSL=false&serverTimezone=UTC
+db.url=jdbc:mysql://localhost:3306/foodstore
 db.usuario=root
 db.password=tu_password_aqui
 db.driver=com.mysql.cj.jdbc.Driver
