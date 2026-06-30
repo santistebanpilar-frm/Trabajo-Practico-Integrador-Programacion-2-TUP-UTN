@@ -144,7 +144,7 @@ README.md
 ## 6. Links
 
 - Repositorio: https://github.com/santistebanpilar-frm/Trabajo-Practico-Integrador-Programacion-2-TUP-UTN
-- Informe: se encuentra dentro del repositorio
+- Informe: https://docs.google.com/document/d/1HKgtPcNXCqfHOQTdXxvAn4IsU1GUYOwEGsLWJjRFkng/edit?usp=sharing 
 
 ---
 
