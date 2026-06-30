@@ -56,5 +56,5 @@ public class CategoriaService extends GenericService<Categoria> {
         }
         return categoriaActualizada;
     }
-    
+    /*probando*/
 }
